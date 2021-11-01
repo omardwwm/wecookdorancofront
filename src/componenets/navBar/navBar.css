@@ -1,0 +1,48 @@
+.navbar{
+    border-radius: 3px;
+}
+
+.navBarDiv{
+    position: relative;
+    /* top:0; */
+    /* top:2px; */
+    width: 98%;
+}
+
+.nav-link{
+    display: inline-block;
+    padding: .5rem 1rem;
+}
+button{
+    margin: 10px;
+}
+
+.profilePic{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.nav-item{
+   padding: 10px;
+}
+
+.nav-item a{
+    color: rgba(255, 255, 255, 0.986);
+    font-family: emoji, serif;
+}
+
+/* .bg-dark {
+    background-color: #24046d!important;
+} */
+.navbar-dark .navbar-brand {
+    color: rgb(243, 161, 8);
+}
+ .navbar-brand{
+    font-size: 1rem;
+ }
+
+ .navbar-toggler-icon {
+     color: darkgoldenrod;
+ }
+

@@ -1,0 +1,44 @@
+.imgCard{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 45%;
+    height: 250px;
+    margin: auto;
+}
+
+#profileCardParent{
+    background-color: rgb(154, 170, 154);
+    color: rgb(255, 255, 255);
+    margin: auto;
+    padding: 5px;
+    display: flex;
+    margin-inline: 10px; 
+    flex-direction: row;
+}
+.profileCard{
+    background-color: rgb(60, 10, 126);
+    /* display: flex; */
+    /* margin: 3px; */
+}
+.presentationCard{
+    background-color: rgb(60, 10, 126);
+    margin-left: 5px;
+}
+
+.collapsCard{
+    background-color: rgb(94, 91, 91);
+}
+
+@media (max-width: 768px){
+    #profileCardParent{
+        display: inline-block;
+        flex-direction: column;
+    }
+    .presentationCard{
+        margin-top: 5px;
+        margin-left: 0;
+    }
+    
+}

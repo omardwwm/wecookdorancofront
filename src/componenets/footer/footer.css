@@ -1,0 +1,59 @@
+.footerDiv{
+    background-color: rgb(46, 59, 46);
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    bottom: 0;
+    position: fixed;
+    height: 60px;
+}
+.contacts{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+.contacts .card{
+    flex-direction: column-reverse;
+    background-color: rgb(47, 6, 88); 
+}
+.accordion>.card>.card-header {
+    height: 60px;
+}
+.card-header {
+    padding: 0rem 1rem;
+}
+.accordionBtn{
+    text-decoration: none;
+    color: #fff;
+}
+.mail{
+    color: floralwhite;
+}
+
+.social-icons2 .icon-linked2{
+    align-items: center;
+    vertical-align: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 2rem;
+    width: 2rem;
+    background-color: #ebc520;
+    color: #fff;
+    border-radius: 100%;
+    font-size: 1.5rem;
+    margin-right: 1.5rem;
+}
+.footerCollaps{
+    background-color: rgb(30, 34, 34);
+}
+
+.social-icons2{
+    display: inline-block;
+    margin-left: 20px;
+}
+.icon-linked2:hover {
+    background-color: #d0dd12;
+    color: #fff;
+    transition: transform 0.5s ease-in-out;
+    transform: rotate(360deg);
+}

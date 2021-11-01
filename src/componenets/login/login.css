@@ -1,0 +1,11 @@
+.loginDiv{
+    display: inline-block;
+}
+
+.loginFormDiv{
+    display: inline-block;
+}
+
+#forgotCollap{
+    background-color: rgb(102, 101, 90);
+}

@@ -1,0 +1,74 @@
+.infos{
+    background-color: rgb(7, 8, 8);
+    padding: .5rem;
+}
+
+.profileRealisations{
+    /* background-color: rgb(41, 88, 73); */
+    margin-top: 10px;
+    margin: auto;
+    display: inline-block;
+}
+
+.imgCard{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    margin: auto;
+}
+
+.profileEmptyRecipeCard{
+    padding: 0.5rem;
+    margin: auto;
+    color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profileRecipeCard{
+    /* height: 220px; */
+    /* width: 240px ; */
+    margin: .5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: rgb(49, 46, 46);
+    color: rgb(230, 226, 235);
+    overflow: hidden;
+}
+.profileRecipeImg{
+    width: 80%;
+    height: 160px;
+    border-radius: 4px;
+}
+#profileTitleCardRealisation{
+    width: 80%;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    font-family:fantasy;
+}
+
+.profileChefName{
+    text-align: center;
+    font-family:cursive;
+    font-size: 22px;
+    color: rgb(241, 243, 104); 
+}
+.titleSpan{
+    color: rgb(224, 169, 18);
+    font-family:fantasy;
+}
+.profileLinkRecipe{
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: 0.5rem;
+}
+.subtitleCard{
+    margin-top: .275rem;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}

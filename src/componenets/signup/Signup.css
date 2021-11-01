@@ -1,0 +1,16 @@
+/* .divInscription{
+  width: 50%;
+} */
+
+#btn_inscription{
+  background-color: #170742; 
+}
+.divImage{
+    /* align-items: center;
+    justify-content: center; */
+    text-align: center;
+}
+.modalImage{
+    width: 60%;
+    height: 120px;
+}
