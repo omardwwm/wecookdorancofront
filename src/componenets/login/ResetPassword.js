@@ -1,14 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import {useHistory} from "react-router-dom"
 import {FormGroup, Input, Button, Form} from 'reactstrap';
+import jwt from "jsonwebtoken";
 
 
 const ResetPassword =(props)=>{
 
     const [submitError, setSubmitError] = useState('');
     const [resResetMessage, setResResetMessage] = useState('');
+    const [tokenExpired, setTokenExpired] = useState(false);
     const history = useHistory();
+    const {id, token} = props.match.params;
     // console.log(props.match.params)
 
     const [form, setForm] = useState({
@@ -19,6 +22,21 @@ const ResetPassword =(props)=>{
             passwordConfirmError: ""
         }
     })
+
+    // const decodedToken = decode(token);
+    useEffect(() => {
+        const {id, token} = props.match.params;
+        console.log(token);
+       if(token){
+           const decodedToken = jwt.decode(token);
+        //    console.log(decodedToken.exp*1000);
+        //    console.log(new Date().getTime());
+           if(decodedToken.exp * 1000 < new Date().getTime()){
+               setTokenExpired(true);
+           }
+       }
+       console.log("token is expired")
+    }, []);
 
     const onChangeValue=(event)=>{
         event.preventDefault();
@@ -52,8 +70,7 @@ const ResetPassword =(props)=>{
         e.preventDefault();
         try {
             const newPassword = form.newPassword;
-            const newPasswordConfirm = form.newPasswordConfirm;
-            const {id, token} = props.match.params;   
+            const newPasswordConfirm = form.newPasswordConfirm;   
             // console.log(form);
             const data = {
                 newPassword: form.newPassword,
@@ -67,7 +84,8 @@ const ResetPassword =(props)=>{
                     Accept:'*/*',
                     'content-type':'application/json' 
                     };
-                const response = await axios.put(`https://mern-recipes.herokuapp.com/reset/change-password/${id}/${token}`, data, {headers} );
+                // const response = await axios.put(`https://mern-recipes.herokuapp.com/reset/change-password/${id}/${token}`, data, {headers} );
+                const response = await axios.put(`http://localhost:8080/reset/change-password/${id}/${token}`, data, {headers} );
                 // console.log(response.data);
                 setResResetMessage(response.data.message);
                 // setTimeout(() => {
@@ -94,33 +112,42 @@ const ResetPassword =(props)=>{
     }
 
     // console.log(resResetMessage);
+    // tokenExpired?
     return(
         <div>
-            <h3>Form reste password</h3>
-            <Form onSubmit={resetPassword}>
-                <FormGroup>
-                    {/* <Label for="examplePassword">Nouveau mot de passe</Label> */}
-                    <Input type="password" name="newPassword" id="examplePassword" placeholder="Entrer le nouveau mot de passe" value={form.newPassword} onChange={onChangeValue} />
-                    {form.errors.passwordError ? 
-                    <div style={{color:'red'}}>
-                        {form.errors.passwordError}
-                    </div>:
-                    null}                                   
-                </FormGroup>
-                <FormGroup>
-                    {/* <Label for="examplePasswordConfirm">Confirmer le Nouveau mot de passe</Label> */}
-                    <Input type="password" name="newPasswordConfirm" id="examplePasswordConfirm" placeholder="Confirmation du mot de passe" value={form.newPasswordConfirm} onChange={onChangeValue} />
-                    {form.errors.passwordConfirmError ? 
-                    <div style={{color:'red'}}>
-                        {form.errors.passwordConfirmError}
-                    </div>:
-                    null}
-                </FormGroup>
-                <p style={{color:'#f0f'}}>{submitError && submitError}</p>
-                                        
-                <Button id="btn_password" type="submit" color="primary" size="sm">Envoyer</Button>
-                <p style={{color:'#000'}}>{resResetMessage && resResetMessage}</p>
-            </Form>    
+            {tokenExpired ?
+               ( <h3>Lien n'est plus valide, Token expired, refaire une demande de reset</h3>):
+               (
+                   <>
+                <h3>Form reste password</h3>
+                <Form onSubmit={resetPassword}>
+                    <FormGroup>
+                        {/* <Label for="examplePassword">Nouveau mot de passe</Label> */}
+                        <Input type="password" name="newPassword" id="examplePassword" placeholder="Entrer le nouveau mot de passe" value={form.newPassword} onChange={onChangeValue} />
+                        {form.errors.passwordError ? 
+                        <div style={{color:'red'}}>
+                            {form.errors.passwordError}
+                        </div>:
+                        null}                                   
+                    </FormGroup>
+                    <FormGroup>
+                        {/* <Label for="examplePasswordConfirm">Confirmer le Nouveau mot de passe</Label> */}
+                        <Input type="password" name="newPasswordConfirm" id="examplePasswordConfirm" placeholder="Confirmation du mot de passe" value={form.newPasswordConfirm} onChange={onChangeValue} />
+                        {form.errors.passwordConfirmError ? 
+                        <div style={{color:'red'}}>
+                            {form.errors.passwordConfirmError}
+                        </div>:
+                        null}
+                    </FormGroup>
+                    <p style={{color:'#f0f'}}>{submitError && submitError}</p>
+                                            
+                    <Button id="btn_password" type="submit" color="primary" size="sm">Envoyer</Button>
+                    <p style={{color:'#000'}}>{resResetMessage && resResetMessage}</p>
+                </Form>
+                </>    
+               )
+            }
+            
         </div>
     )
 }
