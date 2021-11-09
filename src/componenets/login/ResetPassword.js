@@ -26,7 +26,7 @@ const ResetPassword =(props)=>{
     // const decodedToken = decode(token);
     useEffect(() => {
         const {id, token} = props.match.params;
-        console.log(token);
+        // console.log(token);
        if(token){
            const decodedToken = jwt.decode(token);
         //    console.log(decodedToken.exp*1000);
@@ -35,7 +35,6 @@ const ResetPassword =(props)=>{
                setTokenExpired(true);
            }
        }
-       console.log("token is expired")
     }, []);
 
     const onChangeValue=(event)=>{
