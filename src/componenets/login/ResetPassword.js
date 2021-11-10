@@ -104,9 +104,9 @@ const ResetPassword =(props)=>{
                 setSubmitError('Vous devez remplir tous les champs')
             }   
         } catch (error) {
-            console.log(error.response);
+            // console.log(error && error.response && error.response.data.message);
             // setErrorResetMessage(error.response.data.message)
-            setResResetMessage('something went wrong')
+            setResResetMessage(error.response.data.message)
         }  
     }
 
@@ -115,7 +115,12 @@ const ResetPassword =(props)=>{
     return(
         <div>
             {tokenExpired ?
-               ( <h3>Lien n'est plus valide, Token expired, refaire une demande de reset</h3>):
+               ( 
+                   <>
+                    <h3>Lien n'est plus valide, Token expired, refaire une demande de reset</h3>
+                    <p style={{color:'#fff'}}>Reponse de serveur : {resResetMessage && resResetMessage}</p>
+                   </>               
+                ):
                (
                    <>
                 <h3>Form reste password</h3>
