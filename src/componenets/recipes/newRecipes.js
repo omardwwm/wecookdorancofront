@@ -13,6 +13,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./newRecipe.css";
 // import axios from "axios";
 import {useHistory} from "react-router-dom";
+import AutoCompleteIngredient from "./IngredientsSearchAutoComplete";
 
 const Recipes = ()=>{
 
@@ -264,6 +265,9 @@ const Recipes = ()=>{
 
     return (
         <div className="formNewRecipe">
+            <div className="col-8">
+                <AutoCompleteIngredient/>
+            </div>
             <Form className="m-4 col-md-10 col-sm-12 m-auto" encType="multipart/form-data" onSubmit={handleSubmit }>
                 <FormGroup className="col-md-8 col-sm-9 m-auto">
                     <Label for="recipeName">Nom de la recette</Label>
