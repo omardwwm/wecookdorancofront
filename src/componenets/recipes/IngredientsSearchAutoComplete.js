@@ -11,17 +11,16 @@ const AutoCompleteIngredient = () =>{
     
     const dispatch = useDispatch();
     
-    const debounce = (func, delay) => {
-        let inDebounce
-          return function() {
-            const context = this
-            const args = arguments
-            clearTimeout(inDebounce)
-            inDebounce = setTimeout(() => func.apply(context, args), delay)
-          }
-      }
+    // const debounce = (func, delay) => {
+    //     let inDebounce
+    //       return function() {
+    //         const context = this
+    //         const args = arguments
+    //         clearTimeout(inDebounce)
+    //         inDebounce = setTimeout(() => func.apply(context, args), delay)
+    //       }
+    //   }
     
-      searchAutoComplete= debounce(searchAutoComplete, 100);
       const handleChange=(e)=>{
           setQuery(e.target.value);
           searchAutoComplete(e.target.value);
@@ -31,7 +30,7 @@ const AutoCompleteIngredient = () =>{
           if(query !==""){
              dispatch(searchIngredientByName(query)).then(res=>{
                 //  setResults([...results, ...res.data]);
-                 console.log(res[0]);
+                 // console.log(res[0]);
                 //  setResults(res.data).then(setVisible(true))
              });
             //   console.log(test);
