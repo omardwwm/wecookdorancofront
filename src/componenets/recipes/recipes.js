@@ -6,7 +6,7 @@ import axios from "axios";
 import { Form, Button} from 'reactstrap';
 import {GiCook} from 'react-icons/gi';
 import {AiOutlineLike} from 'react-icons/ai';
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 // import {SiCodechef} from 'react-icons/si';
 import "./recipes.css";
 
@@ -53,15 +53,19 @@ const Recipes =(props)=>{
     };
 
     useEffect(()=>{
-        if(categories.length === 0){
-            setFiltredCategories([...newRecipes])
-        }else{
-            setFiltredCategories(
-                newRecipes.filter(categorie =>
-                    categories.some(category => [categorie.recipeCategory].flat().includes(category))
-                    )
-            )
-        };
+        let mounted = true;
+        if(mounted){
+            if(categories.length === 0){
+                setFiltredCategories([...newRecipes])
+            }else{
+                setFiltredCategories(
+                    newRecipes.filter(categorie =>
+                        categories.some(category => [categorie.recipeCategory].flat().includes(category))
+                        )
+                )
+            };
+        }
+        return () => mounted = false;
     }, [categories]) 
 
     // console.log('filtredCategories are:', filtredCategories);

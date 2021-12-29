@@ -25,7 +25,7 @@ const ResetPassword =(props)=>{
 
     // const decodedToken = decode(token);
     useEffect(() => {
-        const {id, token} = props.match.params;
+        const {token} = props.match.params;
         // console.log(token);
        if(token){
            const decodedToken = jwt.decode(token);

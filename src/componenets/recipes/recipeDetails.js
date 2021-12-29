@@ -133,7 +133,7 @@ const RecipeDetails = (props)=>{
             setTestRecipe(response.data);
         })      
     } 
-    testRecipe && console.log('recipeFinalIs', testRecipe);
+    // testRecipe && console.log('recipeFinalIs', testRecipe);
     const idFromRecipe = testRecipe.recipeCreator;
     // idFromRecipe == userId ? console.log('okkkk'): console.log('not working')
     // const isMine = (testRecipe.recipeCreator ===user && user.id || testRecipe.recipeCreator===user && user._id) ? true : false;    
@@ -241,13 +241,13 @@ const RecipeDetails = (props)=>{
                                 <>
                                     {/* {testRecipe.likes.length}&nbsp;&nbsp;{testRecipe.likes.length ===1 ? 'LIKE' : 'LIKES'}  */}
                                     {testRecipe.likes.includes(userId)?(
-                                        <p>
+                                        <div>
                                             {testRecipe.likes.length -1 ===0 ?
                                                 <p><AiOutlineLike onClick={unlikeRecipe} style={{color:'#0ed4f7', fontSize:'30px'}}/> Vous aimez</p> :
                                                 <p><AiOutlineLike onClick={unlikeRecipe} style={{color:'#0ed4f7', fontSize:'30px'}}/>vous et {testRecipe.likes.length -1 ===1? <span> 1 autre personne</span>:<span>{testRecipe.likes.length -1 }&nbsp;autres personnes</span>}</p>
                                             }
                                             
-                                        </p>
+                                        </div>
                                         // <AiOutlineLike onClick={unlikeRecipe} style={{color:'#0ed4f7', fontSize:'30px'}}/>
                                     ):
                                     <p>{testRecipe.likes && testRecipe.likes.length}&nbsp;<AiOutlineLike onClick={likeRecipe} style={{color:'grey', fontSize:'30px'}}/></p>

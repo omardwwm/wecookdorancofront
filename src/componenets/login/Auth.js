@@ -9,13 +9,13 @@ import { Button, Collapse, Card, CardBody } from 'reactstrap';
 
 
 
-const Auth = (props)=>{
+const Auth = ()=>{
 
     const dispatch = useDispatch();
     // const [email, setEmail] = useState(null);
     // const [emailToReset, setEmailToReset] = useState(null);
-    const [ inputs, setInputs] = useState('');
-    const [password, setPassword] = useState(null);
+    const [ inputs, setInputs] = useState("");
+    const [password, setPassword] = useState("");
     // const [token, setToken] = useState(null);
     // collapse for forgotPassword
     const [isOpen, setIsOpen] = useState(false);
@@ -32,26 +32,12 @@ const Auth = (props)=>{
     // console.log(isUserLogged);
     // console.log('isuserloggedafterauth', logged);
     // const token = useSelector(state=>state.userReducer.userToken)
+    const token =localStorage.getItem("userToken");
     const validEmailRegex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
     let [emailError, setEmailError] = useState('');
     const [submitError, setSubmitError] = useState('');
     // const user = useSelector(state => state.userReducer.user);
     const history = useHistory();
-
-    useEffect(()=>{
-        localStorage.getItem("userToken");
-        setLoginMessage('');
-        if(modalBody){
-            setLoginMessage(modalBody)
-        } 
-        if(isUserLogged === true){
-            setTimeout(() => {
-                history.push("/recipes");
-                setLoginMessage('');
-            }, 3000);
-        }        
-    }, [isUserLogged, modalBody]);
-
     const [msgUrlReset, setMsgUrlReset]= useState('');
     const [errorEmailReset, setErrorEmailReset]= useState('');
 
@@ -73,6 +59,7 @@ const Auth = (props)=>{
         setInputs({name:e.target.value})
         // emailError = validEmailRegex.test(e.target.value) ? setEmailError('') : setEmailError('NOT VALID EMAIL') 
     }
+    
 //  console.log(emailError);
     const onChangePassword=(e)=>{
         e.preventDefault();
@@ -93,32 +80,44 @@ const Auth = (props)=>{
         } 
         }else{
             setErrorEmailReset('vous devez saiair un email !')
-        }  
+        }
     }
     // console.log('email in login component', inputs.name);
-
+    
     const userLogin = event => {
         event.preventDefault();
         if(!inputs.name || !password){
             setSubmitError('Vous devez renseigner les deux champs')
         }else{
-             dispatch(login(inputs.name, password))
-            //  setLoginMessage(modalBody);
-             if(isUserLogged === true){
-                setTimeout(() => {
-                    history.push("/recipes");
-                    setLoginMessage('');
-                    }, 3000);
-                }else{
-                    setTimeout(() => {
-                        setLoginMessage('');
-                        setInputs({name:''});
-                        setPassword('')
-                        }, 4000);
-                } 
-            }  
+            dispatch(login(inputs.name, password));
+            if(modalBody){
+                setLoginMessage(modalBody)
+                }
+            }   
+        }
+
+    useEffect(() => {
+        let mounted = true;
+        if(mounted){
+            if(modalBody){
+                setLoginMessage(modalBody)
+            } 
+        }
+        return () => mounted = false;
+    }, [modalBody])
+
+        if(isUserLogged){
+            console.log(modalBody);
+            setTimeout(() => {
+                history.push("/recipes");
+                // setLoginMessage("");
+            }, 3000);
         }
     // console.log(isUserLogged);
+
+    // if(isUserLogged){
+    //     history.push("/recipes");
+    // }
 
     return(
         <>
@@ -134,7 +133,7 @@ const Auth = (props)=>{
                                     className="form-control"
                                     id="inlineFormInputGroup"
                                     placeholder="email"
-                                    value={inputs.name}
+                                    value={inputs.name || ""}
                                     onChange={onChangeEmail}
                                 />
                             </div>
@@ -168,7 +167,7 @@ const Auth = (props)=>{
                     <Collapse isOpen={isOpen}>
                         <Card id="forgotCollap" >
                             <CardBody>
-                                <ForgotPassword value={inputs.name} sendUrl={sendUrl} handleChange={onChangeEmail} messageResponse={msgUrlReset} errorEmailReset={errorEmailReset} name="emailToReset"  />
+                                <ForgotPassword value={inputs.name ||""} sendUrl={sendUrl} handleChange={onChangeEmail} messageResponse={msgUrlReset} errorEmailReset={errorEmailReset} name="emailToReset"  />
                             </CardBody>
                         </Card>                    
                     </Collapse>

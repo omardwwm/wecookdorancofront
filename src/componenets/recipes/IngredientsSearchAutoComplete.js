@@ -1,13 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 // import { connect } from 'react-redux';
 import {useSelector, useDispatch} from "react-redux";
-import {searchIngredientByName} from "../../redux/actions/IngredientsActions";
+import {searchIngredientByName, getIngredientNutriFacts} from "../../redux/actions/IngredientsActions";
 
-const AutoCompleteIngredient = () =>{
+const AutoCompleteIngredient = (props) =>{
 
-    const [query, setQuery] = useState("");
+    // const [ingredientName,setIngredientName] = useState(props.ingredientName);
+    // const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
-    const [visible, setVisible] = useState(false);
+    const [display, setDisplay] = useState(false);
     
     const dispatch = useDispatch();
     
@@ -22,28 +23,69 @@ const AutoCompleteIngredient = () =>{
     //   }
     
       const handleChange=(e)=>{
-          setQuery(e.target.value);
+          //setQuery(e.target.value);
+          props.onChange(e);
           searchAutoComplete(e.target.value);
       }
     
-      const searchAutoComplete = (query) =>{
-          if(query !==""){
-             dispatch(searchIngredientByName(query)).then(res=>{
-                //  setResults([...results, ...res.data]);
-                 // console.log(res[0]);
-                //  setResults(res.data).then(setVisible(true))
-             });
+     // Executer la fonction (redux) pour receperer le nom de l'ingred via l'api
+      const searchAutoComplete = (ingredientName) =>{
+          if(ingredientName.length > 2){
+             dispatch(searchIngredientByName(ingredientName)).then(res=>{
+                setResults(res.data);
+                // console.log(res && res.data);
+                console.log(results);
+                //  setResults(res.data).then(setDisplay(true))
+             }).then(()=>setDisplay(true));
             //   console.log(test);
           }else{
-              setVisible(false);
+              setDisplay(false);
+              setResults([]);
           }
       }
 
+      const getIngredientFacts = (id) =>{
+          dispatch(getIngredientNutriFacts(id)).then(res =>{
+              console.log(res.data.nutrition.nutrients)
+          })
+      }
+
+      const onSuggestHandler = (e) =>{
+          props.selectIngerdientName(e);
+          getIngredientFacts(e.target.id);
+          setResults([]);
+      }
+
+      const enter=()=>{
+          setDisplay(true);
+      }
+
+      const leave=()=>{
+        setDisplay(false);
+    }
+
       return(
-          <div>
-              <input type="text" value={query} onChange={handleChange}/>
+          <div className="col-8">
+              <input type="text" id={props.id} name={props.name} placeholder={props.placeholder} value={props.ingredientName} onChange={handleChange}/>
+              {display && results.length > 0 ? (
+                  <div>
+                      <ol>
+                          {results.map((ingr, index)=>(
+                              <li key={index} onMouseEnter={enter} onMouseLeave={leave} onClick={onSuggestHandler} id={ingr.id} >
+                                  {ingr.name}
+                                  {/* <img src={`https://spoonacular.com/cdn/ingredients_100x100/${ingr.image}`} 
+                                    alt="" /> */}
+                              </li>
+                          ))}
+                      </ol>
+                  </div>
+              ):(
+                  null
+              )
+              }
+
           
-            <h4>test auto complete</h4>
+            {/* <h4>test auto complete</h4> */}
 
           </div>
       )

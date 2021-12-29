@@ -269,8 +269,8 @@ const UpdateRecipe = (props)=>{
                             <h4>Liste des ingredients</h4>
                             <ol>
                                 {recipeIngrediants.map((ing, index)=>(
-                                    <div className="" >
-                                        <li className="d-inline-block" key={index}>
+                                    <div className="" key={index}>
+                                        <li className="d-inline-block" >
                                             {ing.ingredientName}:{"   "}{ing.quantity}
                                             <Button className="btnRemoveIngr" onClick={()=>removeIngredient(index)}><RiDeleteBin6Fill /></Button>
                                         </li>

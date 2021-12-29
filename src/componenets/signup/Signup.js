@@ -202,6 +202,7 @@ const checkCompleteFields =()=>{
         })
     }, [])
 
+    // console.log(form.isPro);
     return(
         <div className="divInscription col-xs-12 col-sm-10 col-md-6 col-lg-5">
             {/* <div className="row"> */}
@@ -259,8 +260,7 @@ const checkCompleteFields =()=>{
                         <FormGroup style={{margin:'20px', padding:'10px'}}>
                             <Label  >
                                 <Input 
-                                type="checkbox" label="isPro" name="isPro" id="isPro" checked={form.isPro}
-                                onClick={onCheckCheckBox} 
+                                type="checkbox" label="isPro" name="isPro" id="isPro" checked={form.isPro} onChange={onCheckCheckBox}
                                 /> 
                                  Etes vous un professionnel ou un chef <br></br>                       
                             </Label>

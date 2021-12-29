@@ -259,7 +259,7 @@ const updateUserMetaData=async(e)=>{
 //         setUserData(response.data);
 //     })
 // }
-console.log(userData)
+// console.log(userData)
     useEffect(()=>{
         setTest(successMsg);
     }, [successMsg]);
@@ -394,13 +394,13 @@ console.log(userData)
                             <>
                                 <CardText>A propos de moi:</CardText>
                                 <CardText>{userData.userMetaData && userData.userMetaData.userPresentation}</CardText>
-                                <CardText>Mes Specialites et influences culinaires:{userData.userMetaData.userKitchenStyles && userData.userMetaData.userKitchenStyles.map((style, index)=>
+                                <>Mes Specialites et influences culinaires:{userData.userMetaData.userKitchenStyles && userData.userMetaData.userKitchenStyles.map((style, index)=>
                                     <ul key={index}>
                                         <li> 
                                             {style}
                                         </li>
                                     </ul>
-                                )}</CardText>
+                                )}</>
                                 {userData.userMetaData && userData.userMetaData.userEstablissement?
                                     (<CardText>Mon etablissement:<br/>{userData.userMetaData.userEstablissement}</CardText>):
                                     null
@@ -428,8 +428,8 @@ console.log(userData)
                                                         <h5>Aperçu des specialites</h5>
                                                         <ol>
                                                             {newKitchenTypes.map((type, index)=>(
-                                                                <div className="p-0 m-0">
-                                                                    <li className="d-inline-block" key={index}>
+                                                                <div className="p-0 m-0" key={index}>
+                                                                    <li className="d-inline-block">
                                                                         {type}
                                                                         <Button className="btnRemoveIngr" onClick={()=>removeKitchenType(index)}><RiDeleteBin6Fill /></Button>
                                                                     </li>
@@ -441,13 +441,13 @@ console.log(userData)
                                                 <FormGroup>
                                                     <Input type="text" name="newUserEstablissement" id="userEstablissement" value={newFormUserData.newUserEstablissement} onChange={onchangeNewUserData} />
                                                 </FormGroup>
-                                                <Button id="btn_password" type="submit" color="primary" size="sm">Mettre a jour mes infos</Button>
+                                                <Button id="btn_updateMesInfosProfile" type="submit" color="primary" size="sm">Mettre a jour mes infos</Button>
                                             </Form>
                                         </CardBody>
                                     </Card>
                                 </Collapse>
                             </>
-                            ):<CardText>
+                            ):<div>
                                 Completer votre profil
                                 <Form encType="multipart/form-data" onSubmit={sendUserData}>
                                     <FormGroup>
@@ -482,9 +482,9 @@ console.log(userData)
                                     <FormGroup>
                                         <Input type="text" name="userEstablissement" id="userEstablissement" placeholder="votre restaurent" value={formUserData.userEstablissement} onChange={onchangeUserData} />
                                     </FormGroup>
-                                    <Button id="btn_password" type="submit" color="primary" size="sm">Envoyer</Button>
+                                    <Button type="submit" color="primary" size="sm">Envoyer</Button>
                                 </Form>
-                            </CardText>
+                            </div>
                         }
                         
                     </CardBody>

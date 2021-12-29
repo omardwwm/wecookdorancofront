@@ -57,8 +57,12 @@ const Home = ()=>{
     // console.log(lastRecipes);
     // console.log(allProf); 
     useEffect(()=>{
-        fetchLastRecipes();
-        dispatch(getProfessionnals());
+        let mounted = true;
+        if(mounted){
+            fetchLastRecipes();
+            dispatch(getProfessionnals());
+        }
+        return () => mounted = false;
     }, [])
 
     return (

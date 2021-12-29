@@ -58,6 +58,8 @@ export const login =(email, password)=>{
             email: email,
             password: password
         });
+        localStorage.setItem("userToken", response.data.token);
+        localStorage.setItem("myUser", JSON.stringify(response.data.user));
         // console.log(response);
         dispatch({
             type: "LOGIN",
@@ -69,8 +71,6 @@ export const login =(email, password)=>{
             modalBody: response.data.message,
             // modalTitle: "login succes test"
         })
-        localStorage.setItem("userToken", response.data.token);
-        localStorage.setItem("myUser", JSON.stringify(response.data.user));
         } catch (error) {
             console.log(error)
             dispatch({

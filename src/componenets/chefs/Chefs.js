@@ -1,7 +1,7 @@
 import React, { useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
-import { Card, CardTitle, CardSubtitle, CardText} from "reactstrap";
+import { Card, CardTitle, CardText} from "reactstrap";
 import {getProfessionnals} from "../../redux/actions/UserActions";
 import avatar from "../../../src/assets/avatar-unisex.png";
 import "./chefs.css";
@@ -18,7 +18,7 @@ const Chefs = ()=>{
 
     const dispatch = useDispatch();
     const allProfessionals = useSelector(state=>state.userReducer.professionnals);
-    console.log(allProfessionals);
+    // console.log(allProfessionals);
 
    useEffect(()=>{
        dispatch(getProfessionnals(config));  

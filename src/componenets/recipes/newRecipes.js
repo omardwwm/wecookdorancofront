@@ -83,9 +83,19 @@ const Recipes = ()=>{
         })
     }
     // console.log(formRecipe);
-    const onChangeIngredientName = (event)=>{
-        setIngredientName(event.target.value)
+    const onChangeIngredientName = (e)=>{
+        setIngredientName(e.target.value)
     }
+    let idSelectedIng;
+    const selectIngerdientName = (e) =>{
+        setIngredientName(e.target.innerText);
+        idSelectedIng = e.target.id;
+        console.log(idSelectedIng);
+    }
+    // Pour recuperer les info nutri de l'ingredient selectionne //TODO
+    // const getIngredientNutriInfos = ()=>{
+
+    // }
     const onChangeIngredientQauntity = (event)=>{
         setQauntity(event.target.value)
     }
@@ -129,7 +139,7 @@ const Recipes = ()=>{
     // console.log(recipePicture);
     const addIngredient =(event)=>{
         event.preventDefault();
-        if(ingredientName ==="" || quantity ==="" || ingredientUnity ===""){
+        if(ingredientName==="" || quantity ==="" || ingredientUnity ===""){
             setIngredientsError("Vous devez enter un nom, une quantité et une unité pour chaque l'ingredient avant de cliquer sur ajouter")
         }else{
             const newIngredient = {
@@ -147,6 +157,7 @@ const Recipes = ()=>{
         }      
     }
 
+    // console.log("ingerd inside newRecipe ===>", ingredientName);
     useEffect(()=>{
         setModal(false);
     }, [])
@@ -161,7 +172,7 @@ const Recipes = ()=>{
     }
     // console.log(convertToRaw(instructions.getCurrentContent()).blocks[0].text);
     // add recipe Button gestion
-    const [disableAddButton, setDisableAddButton] = useState(true);
+    // const [disableAddButton, setDisableAddButton] = useState(true);
     const [msgAddRecipe, setMsgAddRecipe] = useState('');
     const checkFormValidation = ()=>{
         let formIsValid = true;
@@ -298,7 +309,8 @@ const Recipes = ()=>{
                 </FormGroup> */}
                 <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-4">
                     <Label for="ingredientName">Nom de l'ingrédient</Label>
-                    <Input type="text" name="ingredientName" value={ingredientName} id="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} />
+                    {/* <Input type="text" name="ingredientName" value={ingredientName} id="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} /> */}
+                    <AutoCompleteIngredient ingredientName={ingredientName} id="ingredientName" name="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} selectIngerdientName={selectIngerdientName} />
                 </FormGroup>
                 <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
                     <Label for="quantity">Quantité de l'ingrédient</Label>
@@ -327,8 +339,8 @@ const Recipes = ()=>{
                         <h5>Aperçu des ingrédients</h5>
                         <ol>
                             {recipeIngrediants.map((ing, index)=>(
-                                <div className="p-0 m-0" >
-                                    <li className="d-inline-block" key={index}>
+                                <div className="p-0 m-0" key={index}>
+                                    <li className="d-inline-block" >
                                         {ing.ingredientName}{" :  "}{ing.quantity}{" "}{ing.ingredientUnity}
                                         <Button className="btnRemoveIngr" onClick={()=> removeIngredient(index)}><RiDeleteBin6Fill /></Button>
                                     </li>

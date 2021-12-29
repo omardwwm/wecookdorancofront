@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {getUserMetaData} from "../../redux/actions/UserActions";
 import { Link } from "react-router-dom";
-import {Card, CardText, CardBody, CardTitle,CardSubtitle, Button, Collapse} from 'reactstrap';
+import {Card, CardText, CardTitle,CardSubtitle} from 'reactstrap';
 import avatar from "../../../src/assets/avatar-unisex.png";
 import "./chefProfile.css";
 
@@ -13,7 +13,7 @@ const ChefProfile =(props)=>{
     // console.log(userId);
     const dispatch = useDispatch();
     const userData = useSelector(state => state.userReducer.userMetaData);
-    console.log(userData);
+    // console.log(userData);
     useEffect(()=>{
         dispatch(getUserMetaData(userId))
     }, [])
@@ -27,7 +27,7 @@ const ChefProfile =(props)=>{
                     src={userData.profilePicture? userData.profilePicture : avatar}
                     alt="user pictureProfile"
                 />
-                <CardText><span className="titleSpan">A propos de chef</span><br/>
+                <div><span className="titleSpan">A propos de chef</span><br/>
                     {(userData.userMetaData && userData.userMetaData.userPresentation) ? (
                         <CardText>
                            { userData.userMetaData.userPresentation}
@@ -37,10 +37,10 @@ const ChefProfile =(props)=>{
                             A venir (le chef n'a pas encore coplété sa présentasion)
                         </CardText>
                     }
-                </CardText>
-                <CardText><span className="titleSpan">Ses Specialites et influences culinaires:</span>
+                </div>
+                <div><span className="titleSpan">Ses Specialites et influences culinaires:</span>
                     {userData.userMetaData && userData.userMetaData.userKitchenStyles ? (
-                        <CardText>
+                        <div>
                             {userData.userMetaData && userData.userMetaData.userKitchenStyles && userData.userMetaData.userKitchenStyles.map((style, index)=>
                                 <ul key={index}>
                                     <li> 
@@ -48,19 +48,19 @@ const ChefProfile =(props)=>{
                                     </li>
                                 </ul>
                         )}
-                        </CardText>
+                        </div>
                         ):
                         <CardText>
                              A venir (le chef n'a pas encore coplété son profil)
                         </CardText>
                     }   
-                </CardText>
-                <CardText>
+                </div>
+                <div>
                     {userData.userMetaData && userData.userMetaData.userEstablissement?
                         (<CardText><span className="titleSpan">Son établissement:</span><br/>{userData.userMetaData.userEstablissement}</CardText>):
                         <CardText><span className="titleSpan">Son établissement:</span><br/>Le chef n'a pas communiqué d'etablissement</CardText>
                     } 
-                </CardText>
+                </div>
             </Card>
 
             <Card className="profileRealisations mt-3 col-12 ">

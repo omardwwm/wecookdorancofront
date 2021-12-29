@@ -56,7 +56,7 @@ export const userReducer = (state = initialState, action) =>{
                 ...state,
                 user: action.user,
                 userToken: action.token,
-                isUserLogged: action.isUserLogged,
+                isUserLogged: true,
                 redirect: action.redirect,
                 // showModale:action.showModale,
                 // modalTitle:action.modalTitle,
