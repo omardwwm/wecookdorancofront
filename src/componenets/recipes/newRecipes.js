@@ -99,7 +99,7 @@ const Recipes = ()=>{
     const onChangeIngredientQauntity = (event)=>{
         setQauntity(event.target.value)
     }
-    // console.log(recipeIngrediants);
+    console.log(recipeIngrediants);
     //added 1/11/2021
     const onChangeIngredientUnity = (event)=>{
         setIngredientUnity(event.target.value)
@@ -141,12 +141,14 @@ const Recipes = ()=>{
         event.preventDefault();
         if(ingredientName==="" || quantity ==="" || ingredientUnity ===""){
             setIngredientsError("Vous devez enter un nom, une quantité et une unité pour chaque l'ingredient avant de cliquer sur ajouter")
+        }else if(recipeIngrediants.some(ingredient=> ingredient.ingredientName ===ingredientName)){
+            setIngredientsError("Vous avez deja ajoute un ingredient avec ce nom!!")
         }else{
             const newIngredient = {
             ingredientName:ingredientName,
             quantity: quantity,
             ingredientUnity: ingredientUnity
-        }
+            }
         const newIngredients = [...recipeIngrediants, newIngredient];
         setRecipeIngrediants(newIngredients);
         setIngredientName("");
@@ -276,9 +278,6 @@ const Recipes = ()=>{
 
     return (
         <div className="formNewRecipe">
-            <div className="col-8">
-                <AutoCompleteIngredient/>
-            </div>
             <Form className="m-4 col-md-10 col-sm-12 m-auto" encType="multipart/form-data" onSubmit={handleSubmit }>
                 <FormGroup className="col-md-8 col-sm-9 m-auto">
                     <Label for="recipeName">Nom de la recette</Label>
@@ -303,21 +302,17 @@ const Recipes = ()=>{
                         {formRecipe.errors.recipeCategoryError}
                     </div>: null
                 }
-                {/* <FormGroup>
-                    <Label for="recipeCategory">Category</Label>
-                    <Input type="text" name="recipeCategory" id="recipeCategory" placeholder="Choice a category" onChange={handleChange} />
-                </FormGroup> */}
-                <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-4">
+                    <AutoCompleteIngredient ingredientName={ingredientName} quantity={quantity} ingredientUnity={ingredientUnity} onChangeIngredientName={onChangeIngredientName} selectIngerdientName={selectIngerdientName} onChangeIngredientQauntity={onChangeIngredientQauntity} ingredientUnity={ingredientUnity} onChangeIngredientUnity={onChangeIngredientUnity} addIngredient={addIngredient} ingredientsError={ingredientsError} />
+                    {/* ---DEBUT A MODIFIER APRES SELON CHECK OPTION SI AVEC OU SANS CALCUL DES NUTRIFACTS */}
+                {/* <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-4">
                     <Label for="ingredientName">Nom de l'ingrédient</Label>
-                    {/* <Input type="text" name="ingredientName" value={ingredientName} id="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} /> */}
-                    <AutoCompleteIngredient ingredientName={ingredientName} id="ingredientName" name="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} selectIngerdientName={selectIngerdientName} />
+                    <Input type="text" name="ingredientName" value={ingredientName} id="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} />
                 </FormGroup>
                 <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
                     <Label for="quantity">Quantité de l'ingrédient</Label>
-                    <Input type="text" name="quantity" value={quantity} id="quantity" placeholder="Quantité (En chiffre)" onChange={onChangeIngredientQauntity} />
-                    
+                    <Input type="number" name="quantity" value={quantity} id="quantity" placeholder="Quantité (En chiffre)" onChange={onChangeIngredientQauntity} />
+                   
                 </FormGroup>
-                {/* added 1/11/2021 */}
                 <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
                     <Label for="ingredientUnity">Choisir une unite</Label>
                     <select value={ingredientUnity} onChange={onChangeIngredientUnity}>
@@ -326,8 +321,10 @@ const Recipes = ()=>{
                         <option value="cl">Cl</option>
                         <option value="ml">Ml</option>
                     </select>
-                </FormGroup>
-                <Button className="mb-4" onClick={addIngredient}><RiAddCircleFill style={{fontSize:'22px', color:'#ff0'}}/>Ajouter l'ingrédient</Button>
+                </FormGroup> */}
+                {/* A MODIFIER APRES SELON CHECK OPTION SI AVEC OU SANS CALCUL DES NUTRIFACTS ---FIN */}
+
+                {/* <Button className="mb-4" onClick={addIngredient}><RiAddCircleFill style={{fontSize:'22px', color:'#ff0'}}/>Ajouter l'ingrédient</Button> */}
                 {ingredientsError?(
                     <div style={{color:'red'}}>
                         <p>{ingredientsError}</p>

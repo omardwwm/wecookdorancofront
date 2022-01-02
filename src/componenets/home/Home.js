@@ -47,21 +47,31 @@ const Home = ()=>{
         );
       });
 
-    const fetchLastRecipes =async()=>{
-        await axios.get('https://mern-recipes.herokuapp.com/recipes/lastRecipes').then(response=>{
-            // console.log(response.data);
-            setLastRecipes([...lastRecipes, ...response.data])
-            // setLastRecipes([...lastRecipes, ...response.data]);
-        })      
-    } 
+    // const fetchLastRecipes =async()=>{
+    //     await axios.get('https://mern-recipes.herokuapp.com/recipes/lastRecipes').then(response=>{
+    //         console.log(response.data);
+    //         setLastRecipes([...lastRecipes, ...response.data])
+    //     })      
+    // } 
+    
     // console.log(lastRecipes);
     // console.log(allProf); 
     useEffect(()=>{
         let mounted = true;
-        if(mounted){
-            fetchLastRecipes();
-            dispatch(getProfessionnals());
-        }
+        const fetchLastRecipes =async()=>{
+            await axios.get('https://mern-recipes.herokuapp.com/recipes/lastRecipes').then(response=>{
+                // console.log(response.data);
+                if (mounted) {
+                    setLastRecipes([...lastRecipes, ...response.data]);
+                    dispatch(getProfessionnals());        
+                }
+            })      
+        } 
+        fetchLastRecipes();
+        // if(mounted){
+        //     fetchLastRecipes();
+           
+        // }
         return () => mounted = false;
     }, [])
 

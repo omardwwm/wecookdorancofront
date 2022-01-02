@@ -12,3 +12,8 @@ export function formatDate(dateFromDB) {
     // const dateString = currentDate >= 10 ? currentDate : `0${currentDate}`;
     return `${date.getFullYear()}-${monthString}-${currentDateTimes(currentDate)} at ${currentDateTimes(currentDateHours)}:${currentDateTimes(currentMinutes)}`;
 }
+
+
+export const getNutriFactsByIngredient= ()=>{
+
+}

@@ -20,8 +20,8 @@ export const searchIngredientByName = (query = "", limit = 2) => {
   export const getIngredientNutriFacts = (id) =>{
       return async() => {
           try {
-            const response = await axios.get(`https://api.spoonacular.com/food/ingredients/${id}/information?amount=1&apiKey=${apiKey}`);
-            console.log(response && response.data);
+            const response = await axios.get(`https://api.spoonacular.com/food/ingredients/${id}/information?amount=100&unit="g"&apiKey=${apiKey}`);
+            // console.log(response && response.data);
             return response;
           } catch (error) {
             console.log(error)

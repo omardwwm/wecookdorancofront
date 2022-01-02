@@ -49,6 +49,8 @@ const UpdateRecipe = (props)=>{
     const [ingredientsError, setIngredientsError] = useState("");
     const [ingredientName, setIngredientName] = useState("");
     const [ quantity, setQauntity] = useState("");
+      // added 1/11/2021 (unity)
+      const [ingredientUnity, setIngredientUnity] = useState("");
     const recipeCreator = user && user.id;
     const recipeCreatorName = user && user.username;
     // console.log(recipeCreator);
@@ -84,6 +86,10 @@ const UpdateRecipe = (props)=>{
     const onChangeIngredientQauntity = (event)=>{
         setQauntity(event.target.value)
     }
+      //added 1/11/2021
+      const onChangeIngredientUnity = (event)=>{
+        setIngredientUnity(event.target.value)
+    }
     // console.log(recipeIngrediants);
     // console.log(recipeToUpdate.recipeDescription);
 
@@ -117,17 +123,19 @@ const UpdateRecipe = (props)=>{
     // console.log(recipePicture);
     const addIngredient =(event)=>{
         event.preventDefault();
-        if(ingredientName ==="" || quantity ===""){
+        if(ingredientName ==="" || quantity ==="" || ingredientUnity ===""){
             setIngredientsError("Vous devez enter un nom et une (quantité unité) pour l'ingredient avant de cliquer sur ajouter")
         }else{
             const newIngredient = {
             ingredientName:ingredientName,
-            quantity: quantity
+            quantity: quantity,
+            ingredientUnity: ingredientUnity
         }
         const newIngredients = [...recipeIngrediants, newIngredient];
         setRecipeIngrediants(newIngredients);
         setIngredientName("");
         setQauntity("");
+        setIngredientUnity("");
         setIngredientsError("");
         }      
     }
@@ -249,14 +257,23 @@ const UpdateRecipe = (props)=>{
                             {formRecipe.errors.recipeCategoryError}
                         </div>: null
                     }
-                    <FormGroup className="col-md-5 col-sm-6 col-xs-9 d-inline-block mt-4">
+                    <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-4">
                         <Label for="ingredientName">Nom de l'ingrédient</Label>
                         <Input type="text" name="ingredientName" value={ingredientName} id="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} />
                     </FormGroup>
-                    <FormGroup className="col-md-5 col-sm-6 col-xs-9 d-inline-block">
+                    <FormGroup className="col-md-3 col-sm-4 col-xs-9 d-inline-block">
                         <Label for="quantity">Quantité de l'ingrédient</Label>
-                        <Input type="text" name="quantity" value={quantity} id="quantity" placeholder="Quantité : unité (Ex : 100 gr)" onChange={onChangeIngredientQauntity} />
+                        <Input type="text" name="quantity" value={quantity} id="quantity" placeholder="Quantité : en chiffre" onChange={onChangeIngredientQauntity} />
                     </FormGroup>
+                    <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
+                    <Label for="ingredientUnity">Choisir une unite</Label>
+                    <Input type={"select"} value={ingredientUnity} onChange={onChangeIngredientUnity}>
+                        <option value=""></option>
+                        <option value="gramme">Gramme</option>
+                        <option value="cl">Cl</option>
+                        <option value="ml">Ml</option>
+                    </Input>
+                </FormGroup>
                     <Button className="mb-4" onClick={addIngredient}><RiAddCircleFill style={{fontSize:'22px', color:'#ff0'}}/>Ajouter l'ingrédient</Button>
                     {ingredientsError?(
                         <div style={{color:'red'}}>
@@ -271,7 +288,7 @@ const UpdateRecipe = (props)=>{
                                 {recipeIngrediants.map((ing, index)=>(
                                     <div className="" key={index}>
                                         <li className="d-inline-block" >
-                                            {ing.ingredientName}:{"   "}{ing.quantity}
+                                            {ing.ingredientName}:{"   "}{ing.quantity}{ing.ingredientUnity}
                                             <Button className="btnRemoveIngr" onClick={()=>removeIngredient(index)}><RiDeleteBin6Fill /></Button>
                                         </li>
                                        
