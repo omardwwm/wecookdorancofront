@@ -25,10 +25,10 @@ const AutoCompleteIngredient = (props) =>{
     const[recipeIngrediants, setRecipeIngrediants] = useState([]);
     
     // Constantes Pour ajoter les nitriFacts
-    const[ingredientCaloriesForCentGrams, setIngredientCaloriesForCentGrams] = useState("");
-    const[ingredientCarbohydForCentGrams, setIngredientCarbohydForCentGrams] = useState(0);
-    const[ingredientProteinForCentGrams, setIngredientProteinForCentGrams] = useState(0);
-    const[ingredientFatForCentGrams, setIngredientFatForCentGrams] = useState(0);
+    // const[ingredientCaloriesForCentGrams, setIngredientCaloriesForCentGrams] = useState("");
+    // const[ingredientCarbohydForCentGrams, setIngredientCarbohydForCentGrams] = useState(0);
+    // const[ingredientProteinForCentGrams, setIngredientProteinForCentGrams] = useState(0);
+    // const[ingredientFatForCentGrams, setIngredientFatForCentGrams] = useState(0);
 
 
 const onChangeIngredientQauntity = (event)=>{
@@ -39,8 +39,69 @@ const onChangeIngredientUnity = (event)=>{
     setIngredientUnity(event.target.value)
 }
 
+const handleChange=(e)=>{
+    //   props.onChangeIngredientName(e);
+    setIngredientName(e.target.value)
+    searchAutoComplete(e.target.value);
+  }
+
+const fetchIngredientFactsInformations = (id) =>{
+    dispatch(getIngredientNutriFacts(id))
+    .then((res)=>{
+        setSelectedIngredient(res && res.data);
+        // ReactDOM.unstable_batchedUpdates(()=>{
+        //     setSelectedIngredient(res && res.data);
+        // });
+        // console.log(res && res.data);
+      //   getNutriFactsByIngredients(res && res.data);
+      });
+      console.log(selectedIngredient);              
+  }
+
+// const getNutriFactsByIngredients = (selectedIngredient)=>{
+    // let coef =quantity/100;
+    // console.log(coef)
+    // console.log(selectedIngredient);
+    // if (selectedIngredient && selectedIngredient.nutrition && selectedIngredient.nutrition.nutrients) {
+    //     console.log(selectedIngredient.nutrition && selectedIngredient.nutrition.nutrients);
+    //     const nutrientArray = selectedIngredient.nutrition && selectedIngredient.nutrition.nutrients;
+        // const sugarPerCentGrams = nutrientArray.filter((ing) => ing.name === "Sugar")[0].amount;
+        // const caloriesPerCentGrams = nutrientArray.filter((ing) => ing.name === "Calories")[0].amount* (coef? coef : 1);
+        // console.log(caloriesPerCentGrams);
+        // setIngredientCaloriesForCentGrams(caloriesPerCentGrams);
+        // console.log(ingredientCaloriesForCentGrams);
+        // const proteinPerCentGrams = nutrientArray.filter((ing) => ing.name === "Protein")[0].amount* (coef? coef : 1);
+        // setIngredientProteinForCentGrams(proteinPerCentGrams);
+        // const fatPerCentGrams = nutrientArray.filter((ing) => ing.name === "Fat")[0].amount* (coef? coef : 1);
+        // setIngredientFatForCentGrams(fatPerCentGrams);
+        // const carbohydPerCentGrams = nutrientArray.filter((ing) => ing.name === "Carbohydrates")[0].amount* (coef? coef : 1);
+        // setIngredientCarbohydForCentGrams(carbohydPerCentGrams);
+        // const fiberPerCentGrams = nutrientArray.filter((ing) => ing.name === "Protein")[0].amount;
+        // console.log({caloriesPerCentGrams, proteinPerCentGrams, fatPerCentGrams, carbohydPerCentGrams });
+        // const oneIngredientNutriFacts ={
+        //     ingredientCalories:caloriesPerCentGrams,
+        //     ingredientProtein:proteinPerCentGrams,
+        //     ingredientFat:fatPerCentGrams,
+        //     ingredientCarboHyd:carbohydPerCentGrams
+        // }
+        // console.log(oneIngredientNutriFacts);
+        // const recipeNutriFactTemp = {
+        //     recipeCalories:recipeNutriFacts.recipeCalories + caloriesPerCentGrams,
+        //     recipeProtein:recipeNutriFacts.recipeProtein + proteinPerCentGrams,
+        //     recipeFat:recipeNutriFacts.recipeFat + fatPerCentGrams,
+        //     recipeCarboHyd:recipeNutriFacts.recipeCarboHyd + carbohydPerCentGrams
+        // };
+        // setRecipeNutriFacts(recipeNutriFactTemp);
+        // console.log(recipeNutriFacts);            
+        // return {caloriesPerCentGrams, carbohydPerCentGrams, proteinPerCentGrams, fatPerCentGrams}
+//     }
+// }
+
   const addIngredient =(event)=>{
     event.preventDefault();
+    let coef =quantity/100;
+    // Gerer le coef si unity est en cl ou ml
+    console.log(coef);
     if(ingredientName==="" || quantity ==="" || ingredientUnity ===""){
         setIngredientsError("Vous devez enter un nom, une quantité et une unité pour chaque l'ingredient avant de cliquer sur ajouter")
         return;
@@ -49,20 +110,35 @@ const onChangeIngredientUnity = (event)=>{
         return;
     }else{
 
-        fetchIngredientFactsInformations(selectedIngId);
+        console.log(selectedIngredient)
+        // fetchIngredientFactsInformations(selectedIngId);
+        // getNutriFactsByIngredients(selectedIngredient);
+        console.log(selectedIngredient);
 
-        console.log(ingredientCaloriesForCentGrams);
+        const nutrientArray = selectedIngredient && selectedIngredient.nutrition && selectedIngredient.nutrition.nutrients;
+        // const sugarPerCentGrams = nutrientArray.filter((ing) => ing.name === "Sugar")[0].amount;
+        const caloriesPerCentGrams = nutrientArray.filter((ing) => ing.name === "Calories")[0].amount* (coef? coef : 1);
+        console.log(caloriesPerCentGrams);
+        // setIngredientCaloriesForCentGrams(caloriesPerCentGrams);
+        // console.log(ingredientCaloriesForCentGrams);
+        const proteinPerCentGrams = nutrientArray.filter((ing) => ing.name === "Protein")[0].amount* (coef? coef : 1);
+        // setIngredientProteinForCentGrams(proteinPerCentGrams);
+        const fatPerCentGrams = nutrientArray.filter((ing) => ing.name === "Fat")[0].amount* (coef? coef : 1);
+        // setIngredientFatForCentGrams(fatPerCentGrams);
+        const carbohydPerCentGrams = nutrientArray.filter((ing) => ing.name === "Carbohydrates")[0].amount* (coef? coef : 1);
+        // setIngredientCarbohydForCentGrams(carbohydPerCentGrams);
 
         const newIngredient = {
         ingredientName:ingredientName,
         quantity: quantity,
         ingredientUnity: ingredientUnity,
-        ingredientCaloriesForCentGrams:ingredientCaloriesForCentGrams,
-        ingredientCarbohydForCentGrams:ingredientCarbohydForCentGrams,
-        ingredientProteinForCentGrams:ingredientProteinForCentGrams,
-        ingredientFatForCentGrams:ingredientFatForCentGrams
+        ingredientCaloriesForCentGrams:caloriesPerCentGrams,
+        ingredientCarbohydForCentGrams:carbohydPerCentGrams,
+        ingredientProteinForCentGrams:proteinPerCentGrams,
+        ingredientFatForCentGrams:fatPerCentGrams,
+        ingredientCoef:coef
         }
-        console.log(newIngredient);
+        // console.log(newIngredient);
     const newIngredients = [...recipeIngrediants, newIngredient];
     setRecipeIngrediants(newIngredients);
     // updateIngrediantsList(recipeIngrediants);
@@ -76,6 +152,9 @@ const onChangeIngredientUnity = (event)=>{
     }      
 }
 
+console.log(selectedIngredient);
+console.log(selectedIngId);
+
 const removeIngredient =(index)=>{
     let filtredArray = [...recipeIngrediants];
     // console.log(index)
@@ -86,12 +165,6 @@ const removeIngredient =(index)=>{
     props.onAddIngrediants(filtredArray);
 }
     
-    
-      const handleChange=(e)=>{
-        //   props.onChangeIngredientName(e);
-        setIngredientName(e.target.value)
-          searchAutoComplete(e.target.value);
-      }
     
      // Executer la fonction (redux) pour receperer le nom de l'ingred via l'api
       const searchAutoComplete = (ingredientName) =>{
@@ -109,73 +182,25 @@ const removeIngredient =(index)=>{
           }
       }
 
-      const fetchIngredientFactsInformations = (id) =>{
-          dispatch(getIngredientNutriFacts(id)).then((res)=>{
-              ReactDOM.unstable_batchedUpdates(()=>{
-                  setSelectedIngredient(res && res.data);
-              });
-              console.log(res && res.data);
-              getNutriFactsByIngredients(res && res.data);
-              console.log("INSIDE FETCH", selectedIngredient);
-            })         
-            console.log("OUTSIDE FETCH",selectedIngredient);     
-        }
-    // console.log(selectedIngredient);
-
     // if (ingredientQauntity) {
     //     console.log(ingredientQauntity)
     // }
-    const getNutriFactsByIngredients = (selectedIngredient)=>{
-        let coef =quantity/100;
-        console.log(coef)
-        if (selectedIngredient && selectedIngredient.nutrition && selectedIngredient.nutrition.nutrients) {
-            console.log(selectedIngredient.nutrition && selectedIngredient.nutrition.nutrients);
-            const nutrientArray = selectedIngredient.nutrition && selectedIngredient.nutrition.nutrients;
-            // const sugarPerCentGrams = nutrientArray.filter((ing) => ing.name === "Sugar")[0].amount;
-            const caloriesPerCentGrams = nutrientArray.filter((ing) => ing.name === "Calories")[0].amount* (coef? coef : 1);
-            console.log(caloriesPerCentGrams);
-            setIngredientCaloriesForCentGrams(caloriesPerCentGrams);
-            console.log(ingredientCaloriesForCentGrams);
-            const proteinPerCentGrams = nutrientArray.filter((ing) => ing.name === "Protein")[0].amount* (coef? coef : 1);
-            setIngredientProteinForCentGrams(proteinPerCentGrams);
-            const fatPerCentGrams = nutrientArray.filter((ing) => ing.name === "Fat")[0].amount* (coef? coef : 1);
-            setIngredientFatForCentGrams(fatPerCentGrams);
-            const carbohydPerCentGrams = nutrientArray.filter((ing) => ing.name === "Carbohydrates")[0].amount* (coef? coef : 1);
-            setIngredientCarbohydForCentGrams(carbohydPerCentGrams);
-            // const fiberPerCentGrams = nutrientArray.filter((ing) => ing.name === "Protein")[0].amount;
-            // console.log({caloriesPerCentGrams, proteinPerCentGrams, fatPerCentGrams, carbohydPerCentGrams });
-            // const oneIngredientNutriFacts ={
-            //     ingredientCalories:caloriesPerCentGrams,
-            //     ingredientProtein:proteinPerCentGrams,
-            //     ingredientFat:fatPerCentGrams,
-            //     ingredientCarboHyd:carbohydPerCentGrams
-            // }
-            // console.log(oneIngredientNutriFacts);
-            // const recipeNutriFactTemp = {
-            //     recipeCalories:recipeNutriFacts.recipeCalories + caloriesPerCentGrams,
-            //     recipeProtein:recipeNutriFacts.recipeProtein + proteinPerCentGrams,
-            //     recipeFat:recipeNutriFacts.recipeFat + fatPerCentGrams,
-            //     recipeCarboHyd:recipeNutriFacts.recipeCarboHyd + carbohydPerCentGrams
-            // };
-            // setRecipeNutriFacts(recipeNutriFactTemp);
-            // console.log(recipeNutriFacts);            
-            // return {caloriesPerCentGrams, carbohydPerCentGrams, proteinPerCentGrams, fatPerCentGrams}
+    
+// TODO
+    useEffect(() => {
+        if (selectedIngId) {
+            fetchIngredientFactsInformations(selectedIngId);
         }
-    }
-
-    // useEffect(() => {
-    //     fetchIngredientFactsInformations();
-    //   console.log(selectedIngredient)
-    // }, [selectedIngredient])
+        // getNutriFactsByIngredients(selectedIngredient)
+    }, [selectedIngId])
     
 
-    const addIngredientAndItsNutriFacts = (e)=>{
-        // props.addIngredient(e);
-        addIngredient(e);
-        // fetchIngredientFactsInformations(selectedIngId);
-    }
+    // const addIngredientAndItsNutriFacts = (e)=>{
+    //     // props.addIngredient(e);
+    //     // addIngredient(e);
+    //     // fetchIngredientFactsInformations(selectedIngId);
+    // }
     
-
     const onSuggestHandler = (e) =>{
         // props.selectIngerdientName(e);
         setIngredientName(e.target.innerText);
