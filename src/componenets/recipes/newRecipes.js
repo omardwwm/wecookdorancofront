@@ -50,7 +50,7 @@ const Recipes = ()=>{
     const [ingredientsError, setIngredientsError] = useState("");
     const [ingredientName, setIngredientName] = useState("");
     const [ quantity, setQauntity] = useState("");
-      // added 1/11/2021 (unity)
+    //   added 1/11/2021 (unity)
       const [ingredientUnity, setIngredientUnity] = useState("");
     const recipeCreator = user && user.id ? user.id : user && user._id;
     const recipeCreatorName = user && user.username;
@@ -89,8 +89,8 @@ const Recipes = ()=>{
     let idSelectedIng;
     const selectIngerdientName = (e) =>{
         setIngredientName(e.target.innerText);
-        idSelectedIng = e.target.id;
-        console.log(idSelectedIng);
+        // idSelectedIng = e.target.id;
+        // console.log(idSelectedIng);
     }
     // Pour recuperer les info nutri de l'ingredient selectionne //TODO
     // const getIngredientNutriInfos = ()=>{
@@ -99,7 +99,7 @@ const Recipes = ()=>{
     const onChangeIngredientQauntity = (event)=>{
         setQauntity(event.target.value)
     }
-    console.log(recipeIngrediants);
+    // console.log(recipeIngrediants);
     //added 1/11/2021
     const onChangeIngredientUnity = (event)=>{
         setIngredientUnity(event.target.value)
@@ -137,6 +137,7 @@ const Recipes = ()=>{
         // reader.readAsDataURL(file)   
     };
     // console.log(recipePicture);
+
     const addIngredient =(event)=>{
         event.preventDefault();
         if(ingredientName==="" || quantity ==="" || ingredientUnity ===""){
@@ -186,10 +187,10 @@ const Recipes = ()=>{
             formIsValid = false;
             formRecipe.errors.recipeCategoryError = 'Category ne peut pas etre vide'
         }
-        if(recipeIngrediants.length === 0){
-            formIsValid = false;
-            setIngredientsError('Vous devez ajouter des ingredients !')
-        }
+        // if(recipeIngrediants.length === 0){
+        //     formIsValid = false;
+        //     setIngredientsError('Vous devez ajouter des ingredients !')
+        // }
         if(convertToRaw(instructions.getCurrentContent()).blocks[0].text === '' ){
             formIsValid = false;
             // console.log('ok')
@@ -206,10 +207,11 @@ const Recipes = ()=>{
         }
         return formIsValid;
     }
+    console.log(recipeIngrediants);
     const handleSubmit =(event)=>{
         event.preventDefault();
         const recipeINgTest = recipeIngrediants;
-        // console.log(recipeINgTest);
+        console.log(recipeINgTest);
         // formRecipe.recipeIngrediants.split(',');
         // [
         //     {ingredientName: "potatose",quantity: "200gr"},
@@ -302,50 +304,56 @@ const Recipes = ()=>{
                         {formRecipe.errors.recipeCategoryError}
                     </div>: null
                 }
-                    <AutoCompleteIngredient ingredientName={ingredientName} quantity={quantity} ingredientUnity={ingredientUnity} onChangeIngredientName={onChangeIngredientName} selectIngerdientName={selectIngerdientName} onChangeIngredientQauntity={onChangeIngredientQauntity} ingredientUnity={ingredientUnity} onChangeIngredientUnity={onChangeIngredientUnity} addIngredient={addIngredient} ingredientsError={ingredientsError} />
-                    {/* ---DEBUT A MODIFIER APRES SELON CHECK OPTION SI AVEC OU SANS CALCUL DES NUTRIFACTS */}
-                {/* <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-4">
-                    <Label for="ingredientName">Nom de l'ingrédient</Label>
-                    <Input type="text" name="ingredientName" value={ingredientName} id="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} />
-                </FormGroup>
-                <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
-                    <Label for="quantity">Quantité de l'ingrédient</Label>
-                    <Input type="number" name="quantity" value={quantity} id="quantity" placeholder="Quantité (En chiffre)" onChange={onChangeIngredientQauntity} />
-                   
-                </FormGroup>
-                <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
-                    <Label for="ingredientUnity">Choisir une unite</Label>
-                    <select value={ingredientUnity} onChange={onChangeIngredientUnity}>
-                        <option value=""></option>
-                        <option value="gramme">Gramme</option>
-                        <option value="cl">Cl</option>
-                        <option value="ml">Ml</option>
-                    </select>
-                </FormGroup> */}
-                {/* A MODIFIER APRES SELON CHECK OPTION SI AVEC OU SANS CALCUL DES NUTRIFACTS ---FIN */}
-
-                {/* <Button className="mb-4" onClick={addIngredient}><RiAddCircleFill style={{fontSize:'22px', color:'#ff0'}}/>Ajouter l'ingrédient</Button> */}
-                {ingredientsError?(
-                    <div style={{color:'red'}}>
-                        <p>{ingredientsError}</p>
+                {1 > 0? (
+                    <AutoCompleteIngredient
+                     recipeIngrediants={recipeIngrediants} 
+                     onAddIngrediants={setRecipeIngrediants}
+                     />
+                ):( 
+                    <div>
+                        <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-4">
+                            <Label for="ingredientName">Nom de l'ingrédient</Label>
+                            <Input type="text" name="ingredientName" value={ingredientName} id="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} />
+                        </FormGroup>
+                        <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
+                            <Label for="quantity">Quantité de l'ingrédient</Label>
+                            <Input type="number" name="quantity" value={quantity} id="quantity" placeholder="Quantité (En chiffre)" onChange={onChangeIngredientQauntity} />
+                        
+                        </FormGroup>
+                        <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
+                            <Label for="ingredientUnity">Choisir une unite</Label>
+                            <select value={ingredientUnity} onChange={onChangeIngredientUnity}>
+                                <option value=""></option>
+                                <option value="gramme">Gramme</option>
+                                <option value="cl">Cl</option>
+                                <option value="ml">Ml</option>
+                            </select>
+                        </FormGroup>
+                        <Button className="mb-4" onClick={addIngredient}><RiAddCircleFill style={{fontSize:'22px', color:'#ff0'}}/>Ajouter l'ingrédient</Button>
+                        {ingredientsError?(
+                            <div style={{color:'red'}}>
+                                <p>{ingredientsError}</p>
+                            </div>
+                        )
+                        :null}
+                        {recipeIngrediants.length >0 ?
+                            (<div className="listIng p-0 m-auto col-sm-12 col-lg-9">
+                                <h5>Aperçu des ingrédients</h5>
+                                <ol>
+                                    {recipeIngrediants.map((ing, index)=>(
+                                        <div className="p-0 m-0" key={index}>
+                                            <li className="d-inline-block" >
+                                                {ing.ingredientName}{" :  "}{ing.quantity}{" "}{ing.ingredientUnity}
+                                                <Button className="btnRemoveIngr" onClick={()=> removeIngredient(index)}><RiDeleteBin6Fill /></Button>
+                                            </li>
+                                        
+                                        </div>                       
+                                    ))}
+                                </ol>
+                            </div>) : null
+                        }
                     </div>
-                )
-                :null}
-                {recipeIngrediants.length >0 ?
-                    (<div className="listIng p-0 m-auto col-sm-12 col-lg-9">
-                        <h5>Aperçu des ingrédients</h5>
-                        <ol>
-                            {recipeIngrediants.map((ing, index)=>(
-                                <div className="p-0 m-0" key={index}>
-                                    <li className="d-inline-block" >
-                                        {ing.ingredientName}{" :  "}{ing.quantity}{" "}{ing.ingredientUnity}
-                                        <Button className="btnRemoveIngr" onClick={()=> removeIngredient(index)}><RiDeleteBin6Fill /></Button>
-                                    </li>
-                                   
-                                </div>                       
-                            ))}
-                        </ol>
-                    </div>) : null
+                    )
                 }
                 
                 {/* <FormGroup>
