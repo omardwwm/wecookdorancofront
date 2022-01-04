@@ -144,7 +144,7 @@ const fetchIngredientFactsInformations = (id) =>{
     // updateIngrediantsList(recipeIngrediants);
     // https://stackoverflow.com/questions/55028583/how-do-i-call-setstate-from-another-component-in-reactjs
     props.onAddIngrediants(newIngredients);
-    // props.calculRecipeNutrifactsFor100Grams(recipeIngrediants);
+    props.calculRecipeNutrifactsFor100Grams(recipeIngrediants);
     setIngredientName("");
     setQauntity("");
     //added 1/11/2021

@@ -260,18 +260,24 @@ const Recipes = ()=>{
             let sumCalories = recipeIngrediants.reduce(function(prev, current){
                 return prev + +current.ingredientCaloriesForCentGrams
             }, 0);
-            console.log(sumCalories);       
+            console.log(sumCalories); 
+            const nutriFactsTemp = {
+                recipeCaloriesIn100Grams: sumCalories,
+                recipeCarbohydIn100Grams: 0,
+                recipeProteinIn100Grams: 0,
+                recipeFatIn100Grams: 0
+            }
+            setRecipeNutriFacts(nutriFactsTemp);     
         }
     }
     // A revoir si besoin de ce useeffect (psk y'a la validation des nutri avant l'ajout de la recette)
-    // useEffect(() => {
-    //     let mounted = true
-    //     if(mounted){
-    //         calculRecipeNutrifactsFor100Grams(recipeIngrediants);
-    //         setRecipeNutriFacts(recipeNutriFacts);
-    //     }
-    //     return () => mounted = false;
-    // }, [recipeNutriFacts, recipeIngrediants]);
+    useEffect(() => {
+        let mounted = true
+        if(mounted){
+            calculRecipeNutrifactsFor100Grams(recipeIngrediants);
+        }
+        return () => mounted = false;
+    }, [recipeIngrediants]);
 
     console.log(willGiveNutriFacts)
     console.log(recipeNutriFacts);
