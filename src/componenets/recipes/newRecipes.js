@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Form, FormGroup, Label, Input, Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {Form, FormGroup, Label, Input, Button, Modal, ModalBody, ModalFooter, ModalHeader, Collapse, Card, CardBody} from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useSelector, useDispatch} from "react-redux";
 import {createRecipe} from "../../redux/actions/RecipeActions";
@@ -55,6 +55,8 @@ const Recipes = ()=>{
     //   const pour la gestion de calcul et communication des nutriFacts
       const [willCalculateNutriFacts, setWillCalculateNutriFacts] = useState(false);
       const [willGiveNutriFacts, setWillGiveNutriFacts] = useState(false);
+      const [isOpen, setIsOpen] = useState(false);
+
     const recipeCreator = user && user.id ? user.id : user && user._id;
     const recipeCreatorName = user && user.username;
     // console.log(recipeCreator);
@@ -219,6 +221,14 @@ const Recipes = ()=>{
     // Gerer la condition pour communiquer ou pas les ntriFACTS si on choisit pas le calcul just  dans la checkbox d'avant 
     const onCheckCheckBoxGiveNutri=()=>{
         setWillGiveNutriFacts(!willGiveNutriFacts);
+        toggleCollapse();
+    }
+
+    // Gerer l'affichage de form pour declare les nutriFacts si fourni par le createure de la recette
+    const toggleCollapse = (e) =>{
+        // const {name} = e.target
+        setIsOpen(!isOpen);
+      //   setInputs(state=>({...state, name:''}))
     }
     
     const calculRecipeNutrifactsFor100Grams = (recipeIngrediants)=>{
@@ -379,6 +389,15 @@ const Recipes = ()=>{
                                 <p style={{fontSize:"10px", color:"yellow"}}>**Pour chaque 100 grames dans la recette</p> 
                             </FormGroup>
                         ):null}
+                         <div>
+                            <Collapse isOpen={isOpen}>
+                                    <Card id="NutriCollaps" >
+                                        <CardBody style={{background:"gray"}}>
+                                        <p>Futur form pour declarer les nutriFacts fournis par le chef</p>
+                                        </CardBody>
+                                    </Card>                    
+                            </Collapse>
+                        </div>
                         {recipeIngrediants.length >0 ?
                             (<div className="listIng p-0 m-auto col-sm-12 col-lg-9">
                                 <h5>Aperçu des ingrédients</h5>
