@@ -52,6 +52,9 @@ const Recipes = ()=>{
     const [ quantity, setQauntity] = useState("");
     //   added 1/11/2021 (unity)
       const [ingredientUnity, setIngredientUnity] = useState("");
+    //   const pour la gestion de calcul et communication des nutriFacts
+      const [willCalculateNutriFacts, setWillCalculateNutriFacts] = useState(false);
+      const [willGiveNutriFacts, setWillGiveNutriFacts] = useState(false);
     const recipeCreator = user && user.id ? user.id : user && user._id;
     const recipeCreatorName = user && user.username;
     // console.log(recipeCreator);
@@ -207,17 +210,31 @@ const Recipes = ()=>{
         }
         return formIsValid;
     }
+    // Calcule des nutriFacts avant de le transmetter a la fonction submit et l'envoie au back et la BDD 
+    // A ajouter une const pour gerer la condition d'1 recipe avec ou sans calcule
+    const onCheckCheckBoxCalculate =()=>{
+        setWillCalculateNutriFacts(!willCalculateNutriFacts);
+    }
+
+    // Gerer la condition pour communiquer ou pas les ntriFACTS si on choisit pas le calcul just  dans la checkbox d'avant 
+    const onCheckCheckBoxGiveNutri=()=>{
+        setWillGiveNutriFacts(!willGiveNutriFacts);
+    }
+    
+    const calculRecipeNutrifactsFor100Grams = (recipeIngrediants)=>{
+        if (recipeIngrediants != null) {
+            let sumCalories = recipeIngrediants.reduce(function(prev, current){
+                return prev + +current.ingredientCaloriesForCentGrams
+            }, 0);
+            console.log(sumCalories); 
+        }
+    }
     console.log(recipeIngrediants);
     const handleSubmit =(event)=>{
         event.preventDefault();
         const recipeINgTest = recipeIngrediants;
         console.log(recipeINgTest);
-        // formRecipe.recipeIngrediants.split(',');
-        // [
-        //     {ingredientName: "potatose",quantity: "200gr"},
-        //     {ingredientName: "tomatoes",quantity: "2 pieces"},
-        //     {ingredientName: "olive oil",quantity: "20cl"}
-        // ];
+        calculRecipeNutrifactsFor100Grams(recipeINgTest);
         const recipeToSend = JSON.stringify(recipeINgTest);
         // console.log(recipeToSend);
         const config = {headers: {
@@ -269,13 +286,14 @@ const Recipes = ()=>{
     useEffect(()=>{
         localStorage.getItem('myUser');
         localStorage.getItem('userToken');
+        console.log(recipeIngrediants);
         // if(user && token){
         //     setDisableAddButton(false)
         // }else{
         //     setDisableAddButton(true);
         //     setMsgAddRecipe('Vous devez vous connecter pour pouvoir ajouter une recette')
         // }
-    }, [])
+    }, [recipeIngrediants])
     
 
     return (
@@ -304,14 +322,26 @@ const Recipes = ()=>{
                         {formRecipe.errors.recipeCategoryError}
                     </div>: null
                 }
-                {1 > 0? (
+                <FormGroup className=" d-inline-block mt-4">
+                    <Label  >
+                        <p className="d-inline-block mr-4">
+                            Vous voulez calculer les nutriFacts * ?
+                        </p>     
+                        <Input                  
+                            type="checkbox" label="checkbox" name="checkbox" id="willCalculateNutriFacts" checked={willCalculateNutriFacts} onChange={onCheckCheckBoxCalculate}
+                        /> 
+                        <p style={{fontSize:"10px", color:"yellow"}}>* Pour chaque 100 grames dans la recette</p>
+                    </Label>
+                </FormGroup>
+                {willCalculateNutriFacts? (
                     <AutoCompleteIngredient
                      recipeIngrediants={recipeIngrediants} 
                      onAddIngrediants={setRecipeIngrediants}
+                     calculRecipeNutrifactsFor100Grams={calculRecipeNutrifactsFor100Grams}
                      />
                 ):( 
-                    <div>
-                        <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-4">
+                    <div className="mt-4">
+                        <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block">
                             <Label for="ingredientName">Nom de l'ingrédient</Label>
                             <Input type="text" name="ingredientName" value={ingredientName} id="ingredientName" placeholder="Le nom de l'ingrédient" onChange={onChangeIngredientName} />
                         </FormGroup>
@@ -336,6 +366,19 @@ const Recipes = ()=>{
                             </div>
                         )
                         :null}
+                        {!willCalculateNutriFacts ? (
+                            <FormGroup className="">
+                                <Label  >
+                                    <p className="d-inline-block mr-4">
+                                        Connaissez vous les info nutri de votre recette ** ?
+                                    </p>    
+                                    <Input                  
+                                        type="checkbox" label="checkbox" name="checkbox" id="willGiveNutriFacts" checked={willGiveNutriFacts} onChange={onCheckCheckBoxGiveNutri}
+                                    /> 
+                                </Label>
+                                <p style={{fontSize:"10px", color:"yellow"}}>**Pour chaque 100 grames dans la recette</p> 
+                            </FormGroup>
+                        ):null}
                         {recipeIngrediants.length >0 ?
                             (<div className="listIng p-0 m-auto col-sm-12 col-lg-9">
                                 <h5>Aperçu des ingrédients</h5>
@@ -355,6 +398,8 @@ const Recipes = ()=>{
                     </div>
                     )
                 }
+
+                {/* pour gerer la condition de calcul ou pas des nutriFacs */}
                 
                 {/* <FormGroup>
                     <Label for="recipeDescription">Instructions of the recipe</Label>

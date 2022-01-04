@@ -143,7 +143,8 @@ const fetchIngredientFactsInformations = (id) =>{
     setRecipeIngrediants(newIngredients);
     // updateIngrediantsList(recipeIngrediants);
     // https://stackoverflow.com/questions/55028583/how-do-i-call-setstate-from-another-component-in-reactjs
-    props.onAddIngrediants(newIngredients)
+    props.onAddIngrediants(newIngredients);
+    // props.calculRecipeNutrifactsFor100Grams(recipeIngrediants);
     setIngredientName("");
     setQauntity("");
     //added 1/11/2021
@@ -219,7 +220,7 @@ const removeIngredient =(index)=>{
 
       return(
           <div>
-              <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-4">
+              <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block mt-2">
                 <Label for="ingredientName">Nom de l'ingrédient</Label>
                 <Input type="text" id="ingredientName" name="ingredientName" placeholder="nom de l'ingredient" value={ingredientName} onChange={(e)=>handleChange(e)}/>
                 {display && suggestions && suggestions.length > 0 ? (
