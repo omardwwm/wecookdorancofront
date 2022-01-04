@@ -47,6 +47,7 @@ const Recipes = ()=>{
     const dispatch = useDispatch();
     // const [inputValue, setInputValue]=useState("");
     const[recipeIngrediants, setRecipeIngrediants] = useState([]);
+    const [recipeNutriFacts, setRecipeNutriFacts] = useState([]);
     const [ingredientsError, setIngredientsError] = useState("");
     const [ingredientName, setIngredientName] = useState("");
     const [ quantity, setQauntity] = useState("");
@@ -210,41 +211,77 @@ const Recipes = ()=>{
             formIsValid = false;
             formRecipe.errors.recipeCookingTimeError = 'La durée est obligatoire'
         }
+        if(recipeIngrediants && recipeIngrediants.length ===0){
+            formIsValid = false;
+            setIngredientsError("Les ingredients sont obligatoires !");
+        }
         return formIsValid;
     }
     // Calcule des nutriFacts avant de le transmetter a la fonction submit et l'envoie au back et la BDD 
     // A ajouter une const pour gerer la condition d'1 recipe avec ou sans calcule
     const onCheckCheckBoxCalculate =()=>{
         setWillCalculateNutriFacts(!willCalculateNutriFacts);
+        setWillGiveNutriFacts(false);
+        setIsOpen(false);
     }
-
     // Gerer la condition pour communiquer ou pas les ntriFACTS si on choisit pas le calcul just  dans la checkbox d'avant 
     const onCheckCheckBoxGiveNutri=()=>{
         setWillGiveNutriFacts(!willGiveNutriFacts);
         toggleCollapse();
     }
-
     // Gerer l'affichage de form pour declare les nutriFacts si fourni par le createure de la recette
     const toggleCollapse = (e) =>{
         // const {name} = e.target
         setIsOpen(!isOpen);
       //   setInputs(state=>({...state, name:''}))
     }
+    // Pour valide les nutrifacts fourni par le chef
+    const validerNutriFacts =(e)=>{
+        e.preventDefault();
+        calculRecipeNutrifactsFor100Grams(recipeIngrediants);
+    }
     
     const calculRecipeNutrifactsFor100Grams = (recipeIngrediants)=>{
-        if (recipeIngrediants != null) {
+        if (recipeIngrediants && recipeIngrediants.length > 0) {
+            if (willGiveNutriFacts) {
+                // pour le test, a modifier selon les info fourni par le createur de la recette via le form dans la collapse
+                const nutriFactsTemp = {
+                    recipeCaloriesIn100Grams: 55,
+                    recipeCarbohydIn100Grams: 0,
+                    recipeProteinIn100Grams: 0,
+                    recipeFatIn100Grams: 0
+                }
+                // const finalrecipeNutriFacts = [...recipeNutriFacts, nutriFactsTemp];
+                setRecipeNutriFacts(nutriFactsTemp);
+            }
+        }
+
+        if (willCalculateNutriFacts) {
             let sumCalories = recipeIngrediants.reduce(function(prev, current){
                 return prev + +current.ingredientCaloriesForCentGrams
             }, 0);
-            console.log(sumCalories); 
+            console.log(sumCalories);       
         }
     }
+    // A revoir si besoin de ce useeffect (psk y'a la validation des nutri avant l'ajout de la recette)
+    // useEffect(() => {
+    //     let mounted = true
+    //     if(mounted){
+    //         calculRecipeNutrifactsFor100Grams(recipeIngrediants);
+    //         setRecipeNutriFacts(recipeNutriFacts);
+    //     }
+    //     return () => mounted = false;
+    // }, [recipeNutriFacts, recipeIngrediants]);
+
+    console.log(willGiveNutriFacts)
+    console.log(recipeNutriFacts);
     console.log(recipeIngrediants);
     const handleSubmit =(event)=>{
         event.preventDefault();
         const recipeINgTest = recipeIngrediants;
         console.log(recipeINgTest);
-        calculRecipeNutrifactsFor100Grams(recipeINgTest);
+        // calculRecipeNutrifactsFor100Grams(recipeINgTest);
+        console.log(recipeNutriFacts);
         const recipeToSend = JSON.stringify(recipeINgTest);
         // console.log(recipeToSend);
         const config = {headers: {
@@ -395,6 +432,7 @@ const Recipes = ()=>{
                                         <CardBody style={{background:"gray"}}>
                                         <p>Futur form pour declarer les nutriFacts fournis par le chef</p>
                                         </CardBody>
+                                        <Button onClick={validerNutriFacts}>Valider</Button>
                                     </Card>                    
                             </Collapse>
                         </div>
