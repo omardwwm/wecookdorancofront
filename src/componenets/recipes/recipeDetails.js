@@ -133,6 +133,7 @@ const RecipeDetails = (props)=>{
             setTestRecipe(response.data);
         })      
     } 
+    // TODO // DISPLAY RECIPENUTRIFACTS AFETR FINISH PROCESS IN BACKEND AND DATABASE 
     // testRecipe && console.log('recipeFinalIs', testRecipe);
     const idFromRecipe = testRecipe.recipeCreator;
     // idFromRecipe == userId ? console.log('okkkk'): console.log('not working')

@@ -238,21 +238,37 @@ const Recipes = ()=>{
     // Pour valide les nutrifacts fourni par le chef
     const validerNutriFacts =(e)=>{
         e.preventDefault();
+        if(recipeIngrediants.length === 0){
+            setNutriFactsFormError('Vous devez ajouter des ingredientes avant de dajouter les infos nutritionnelles !!');
+        }
         calculRecipeNutrifactsFor100Grams(recipeIngrediants);
     }
     
+    const[recipeCaloriesIn100Grams, setRecipeCaloriesIn100Grams] = useState('');
+    const[recipeCarbohydIn100Grams, setRecipeCarbohydIn100Grams] = useState('');
+    const[recipeProteinIn100Grams, setRecipeProteinIn100Grams] = useState('');
+    const[recipeFatIn100Grams, setRecipeFatIn100Grams] = useState('');
+    const[nutriFactsFormError, setNutriFactsFormError] = useState(''); 
+
     const calculRecipeNutrifactsFor100Grams = (recipeIngrediants)=>{
+        if(recipeIngrediants && recipeIngrediants.length === 0){
+            setNutriFactsFormError('Vous devez ajouter des ingredientes avant de d\'ajouter les infos nutritionnelles !!');
+        } 
         if (recipeIngrediants && recipeIngrediants.length > 0) {
             if (willGiveNutriFacts) {
                 // pour le test, a modifier selon les info fourni par le createur de la recette via le form dans la collapse
                 const nutriFactsTemp = {
-                    recipeCaloriesIn100Grams: 55,
-                    recipeCarbohydIn100Grams: 0,
-                    recipeProteinIn100Grams: 0,
-                    recipeFatIn100Grams: 0
+                    recipeCaloriesIn100Grams: recipeCaloriesIn100Grams,
+                    recipeCarbohydIn100Grams: recipeCarbohydIn100Grams,
+                    recipeProteinIn100Grams: recipeProteinIn100Grams,
+                    recipeFatIn100Grams: recipeFatIn100Grams
                 }
                 // const finalrecipeNutriFacts = [...recipeNutriFacts, nutriFactsTemp];
+                // if(!recipeCaloriesIn100Grams){
+                //     setNutriFactsFormError('Rensigner toutes les valeurs!!');
+                // }
                 setRecipeNutriFacts(nutriFactsTemp);
+                setNutriFactsFormError('');
             }
         }
 
@@ -290,6 +306,8 @@ const Recipes = ()=>{
         console.log(recipeNutriFacts);
         const recipeToSend = JSON.stringify(recipeINgTest);
         // console.log(recipeToSend);
+        // Add nutrifacts array
+        const nutriFactsToSend = JSON.stringify(recipeNutriFacts);
         const config = {headers: {
             Accept:'*/*',
             "x-auth-token":`${token}`,
@@ -306,6 +324,7 @@ const Recipes = ()=>{
         formData.append('recipeCreator', recipeCreator);
         formData.append('recipeCreatorName', recipeCreatorName);
         formData.append('recipeIngrediants', recipeToSend);
+        formData.append('recipeNutriFacts', nutriFactsToSend);
         // console.log('myPictureIs', recipePicture);
         // console.log(JSON.stringify(formRecipe));
         // axios.post('http://localhost:8080/recipes/add-recipe', formData, config
@@ -348,6 +367,7 @@ const Recipes = ()=>{
         // }
     }, [recipeIngrediants])
     
+    console.log("test from", recipeNutriFacts);
 
     return (
         <div className="formNewRecipe">
@@ -419,29 +439,7 @@ const Recipes = ()=>{
                             </div>
                         )
                         :null}
-                        {!willCalculateNutriFacts ? (
-                            <FormGroup className="">
-                                <Label  >
-                                    <p className="d-inline-block mr-4">
-                                        Connaissez vous les info nutri de votre recette ** ?
-                                    </p>    
-                                    <Input                  
-                                        type="checkbox" label="checkbox" name="checkbox" id="willGiveNutriFacts" checked={willGiveNutriFacts} onChange={onCheckCheckBoxGiveNutri}
-                                    /> 
-                                </Label>
-                                <p style={{fontSize:"10px", color:"yellow"}}>**Pour chaque 100 grames dans la recette</p> 
-                            </FormGroup>
-                        ):null}
-                         <div>
-                            <Collapse isOpen={isOpen}>
-                                    <Card id="NutriCollaps" >
-                                        <CardBody style={{background:"gray"}}>
-                                        <p>Futur form pour declarer les nutriFacts fournis par le chef</p>
-                                        </CardBody>
-                                        <Button onClick={validerNutriFacts}>Valider</Button>
-                                    </Card>                    
-                            </Collapse>
-                        </div>
+                       
                         {recipeIngrediants.length >0 ?
                             (<div className="listIng p-0 m-auto col-sm-12 col-lg-9">
                                 <h5>Aperçu des ingrédients</h5>
@@ -461,6 +459,47 @@ const Recipes = ()=>{
                     </div>
                     )
                 }
+                 {!willCalculateNutriFacts ? (
+                            <FormGroup className="">
+                                <Label  >
+                                    <p className="d-inline-block mr-4">
+                                        Connaissez vous les info nutri de votre recette ** ?
+                                    </p>    
+                                    <Input                  
+                                        type="checkbox" label="checkbox" name="checkbox" id="willGiveNutriFacts" checked={willGiveNutriFacts} onChange={onCheckCheckBoxGiveNutri}
+                                    /> 
+                                </Label>
+                                <p style={{fontSize:"10px", color:"yellow"}}>**Pour chaque 100 grames dans la recette</p> 
+                            </FormGroup>
+                        ):null}
+                         <div>
+                            <Collapse isOpen={isOpen}>
+                                    <Card id="NutriCollaps" >
+                                        <CardBody style={{background:"gray"}}>
+                                            <p>Futur form pour declarer les nutriFacts fournis par le chef</p>
+                                            <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block">
+                                                <Label for="recipeCaloriesIn100Grams">Calories</Label>
+                                                <Input type="number" name="recipeCaloriesIn100Grams" value={recipeCaloriesIn100Grams} id="recipeCaloriesIn100Grams" onChange={(e)=> setRecipeCaloriesIn100Grams(e.target.value)} />
+                                            </FormGroup>
+                                            <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block">
+                                                <Label for="recipeCarbohydIn100Grams">Glucides</Label>
+                                                <Input type="number" name="recipeCarbohydIn100Grams" value={recipeCarbohydIn100Grams} id="recipeCarbohydIn100Grams" onChange={(e)=> setRecipeCarbohydIn100Grams(e.target.value)} />
+                                            </FormGroup>
+                                            <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block">
+                                                <Label for="recipeProteinIn100Grams">Proteines</Label>
+                                                <Input type="number" name="recipeProteinIn100Grams" value={recipeProteinIn100Grams} id="recipeProteinIn100Grams" onChange={(e)=> setRecipeProteinIn100Grams(e.target.value)} />
+                                            </FormGroup>
+                                            <FormGroup className="col-md-4 col-sm-5 col-xs-9 d-inline-block">
+                                                <Label for="recipeFatIn100Grams">Lipides</Label>
+                                                <Input type="number" name="recipeFatIn100Grams" value={recipeFatIn100Grams} id="recipeFatIn100Grams" onChange={(e)=> setRecipeFatIn100Grams(e.target.value)} />
+                                            </FormGroup>
+
+                                        </CardBody>
+                                        <Button onClick={validerNutriFacts}>Valider</Button>
+                                        <p style={{color:'#ff0000'}}>{nutriFactsFormError}</p>
+                                    </Card>                    
+                            </Collapse>
+                        </div>
 
                 {/* pour gerer la condition de calcul ou pas des nutriFacs */}
                 

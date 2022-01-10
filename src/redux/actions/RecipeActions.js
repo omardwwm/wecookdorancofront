@@ -3,7 +3,9 @@ import axios from "axios";
 export const createRecipe = (formData, config)=>{
     return async(dispatch)=>{
         try {
-            const response = await axios.post('https://mern-recipes.herokuapp.com/recipes/add-recipe', formData, config);
+            // const response = await axios.post('https://mern-recipes.herokuapp.com/recipes/add-recipe', 
+            const response = await axios.post('http://localhost:8080/recipes/add-recipe', // PENSER A REMETTRE L'URL PRODUCTION "HEROKU",  DECOMMENTER.
+            formData, config);
             // console.log(response);
             dispatch({
                 type: "CREATE-RECIPE",
