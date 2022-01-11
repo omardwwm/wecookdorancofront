@@ -10,6 +10,8 @@ import {useHistory, Link} from "react-router-dom";
 import {formatDate} from "../../outils/outils";
 import {GiAlarmClock, GiTrashCan} from 'react-icons/gi';
 import {AiOutlineLike} from 'react-icons/ai';
+import {Doughnut} from 'react-chartjs-2';
+import DoghChart from './DoghChart';
 import "./recipes.css";
 
 const RecipeDetails = (props)=>{    
@@ -129,12 +131,13 @@ const RecipeDetails = (props)=>{
     // const currentRecipeComments = testRecipe && testRecipe.comments && testRecipe.comments;
     // console.log(currentRecipeComments);
     const fetchRecipe =async()=>{
-        await axios.get(`https://mern-recipes.herokuapp.com/recipes/${recipeId}`).then(response=>{
+        // await axios.get(`https://mern-recipes.herokuapp.com/recipes/${recipeId}`).then(response=>{
+            await axios.get(`http://localhost:8080/recipes/${recipeId}`).then(response=>{
             setTestRecipe(response.data);
         })      
     } 
     // TODO // DISPLAY RECIPENUTRIFACTS AFETR FINISH PROCESS IN BACKEND AND DATABASE 
-    // testRecipe && console.log('recipeFinalIs', testRecipe);
+    testRecipe && console.log('recipeFinalIs', testRecipe);
     const idFromRecipe = testRecipe.recipeCreator;
     // idFromRecipe == userId ? console.log('okkkk'): console.log('not working')
     // const isMine = (testRecipe.recipeCreator ===user && user.id || testRecipe.recipeCreator===user && user._id) ? true : false;    
@@ -246,16 +249,13 @@ const RecipeDetails = (props)=>{
                                             {testRecipe.likes.length -1 ===0 ?
                                                 <p><AiOutlineLike onClick={unlikeRecipe} style={{color:'#0ed4f7', fontSize:'30px'}}/> Vous aimez</p> :
                                                 <p><AiOutlineLike onClick={unlikeRecipe} style={{color:'#0ed4f7', fontSize:'30px'}}/>vous et {testRecipe.likes.length -1 ===1? <span> 1 autre personne</span>:<span>{testRecipe.likes.length -1 }&nbsp;autres personnes</span>}</p>
-                                            }
-                                            
+                                            }                                           
                                         </div>
                                         // <AiOutlineLike onClick={unlikeRecipe} style={{color:'#0ed4f7', fontSize:'30px'}}/>
-                                    ):
-                                    <p>{testRecipe.likes && testRecipe.likes.length}&nbsp;<AiOutlineLike onClick={likeRecipe} style={{color:'grey', fontSize:'30px'}}/></p>
-                                        }
-                                    
-                                </> 
-                                
+                                        ):
+                                            <p>{testRecipe.likes && testRecipe.likes.length}&nbsp;<AiOutlineLike onClick={likeRecipe} style={{color:'grey', fontSize:'30px'}}/></p>
+                                    }                                 
+                                </>                                
                             ):
                                 <>
                                     <p>0&nbsp;<AiOutlineLike onClick={likeRecipe} style={{color:'grey', fontSize:'30px'}}/></p>        
@@ -269,11 +269,20 @@ const RecipeDetails = (props)=>{
                     <GiAlarmClock style={{color:'#0f0', fontSize:'32px'}}/>&nbsp;&nbsp;&nbsp;
                     <span>Preparation : {testRecipe.recipePreparationTime}&nbsp;Min</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span>Cuisson : {testRecipe.recipeCookingTime}&nbsp;Min</span>
-                </p>    
+                </p> 
+                {testRecipe.recipeNutriFacts && testRecipe.recipeNutriFacts.length > 0 ? (
+                    <div>
+                        <h4>Informations nutritionnelles pour 100 g de recette</h4>     
+                        <div className="m-4 col-md-6 col-lg-4 col-xs-10" >
+                            <DoghChart nutriFacts={testRecipe && testRecipe.recipeNutriFacts}/>
+                        </div>
+                    </div>
+                    ):null
+                }   
                 <h3 className="text-center">Liste des ingredients</h3>
                 <div className="listIngDetailRecipe">
                     {ingredients && ingredients.map((ing, index)=> (
-                        <ul className="ingr" key={index}>{ing.ingredientName}: {ing.quantity} </ul>
+                        <ul className="ingr" key={index}>{ing.ingredientName}: {ing.quantity} {ing.ingredientUnity && ing.ingredientUnity} </ul>
                     ))}
                 </div>
                

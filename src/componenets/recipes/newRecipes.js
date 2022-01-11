@@ -251,24 +251,22 @@ const Recipes = ()=>{
     const[nutriFactsFormError, setNutriFactsFormError] = useState(''); 
 
     const calculRecipeNutrifactsFor100Grams = (recipeIngrediants)=>{
-        if(recipeIngrediants && recipeIngrediants.length === 0){
-            setNutriFactsFormError('Vous devez ajouter des ingredientes avant de d\'ajouter les infos nutritionnelles !!');
-        } 
         if (recipeIngrediants && recipeIngrediants.length > 0) {
             if (willGiveNutriFacts) {
-                // pour le test, a modifier selon les info fourni par le createur de la recette via le form dans la collapse
-                const nutriFactsTemp = {
-                    recipeCaloriesIn100Grams: recipeCaloriesIn100Grams,
-                    recipeCarbohydIn100Grams: recipeCarbohydIn100Grams,
-                    recipeProteinIn100Grams: recipeProteinIn100Grams,
-                    recipeFatIn100Grams: recipeFatIn100Grams
+                if(!recipeCaloriesIn100Grams || !recipeCaloriesIn100Grams || !recipeProteinIn100Grams ||!recipeFatIn100Grams){
+                    setNutriFactsFormError('Rensigner toutes les valeurs!!');
+                }else{
+                    // pour le test, a modifier selon les info fourni par le createur de la recette via le form dans la collapse
+                    const nutriFactsTemp = {
+                        recipeCaloriesIn100Grams: recipeCaloriesIn100Grams,
+                        recipeCarbohydIn100Grams: recipeCarbohydIn100Grams,
+                        recipeProteinIn100Grams: recipeProteinIn100Grams,
+                        recipeFatIn100Grams: recipeFatIn100Grams
+                    }
+                    // const finalrecipeNutriFacts = [...recipeNutriFacts, nutriFactsTemp];
+                    setRecipeNutriFacts(nutriFactsTemp);
+                    setNutriFactsFormError('');
                 }
-                // const finalrecipeNutriFacts = [...recipeNutriFacts, nutriFactsTemp];
-                // if(!recipeCaloriesIn100Grams){
-                //     setNutriFactsFormError('Rensigner toutes les valeurs!!');
-                // }
-                setRecipeNutriFacts(nutriFactsTemp);
-                setNutriFactsFormError('');
             }
         }
 

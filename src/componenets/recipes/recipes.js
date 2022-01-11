@@ -87,9 +87,11 @@ const Recipes =(props)=>{
                         {myCategory.affichage}
                     </label>
             </div>
-        ))     
+        )) 
+        // http://localhost:8080/recipes    // 
     const fetchRecipes =async()=>{
-        await axios.get('https://mern-recipes.herokuapp.com/recipes').then(response=>{
+        // await axios.get('https://mern-recipes.herokuapp.com/recipes').then(response=>{
+            await axios.get('http://localhost:8080/recipes').then(response=>{
             setRecipes([...recipes, ...response.data]);
             setFiltredCategories([...filtredCategories, ...response.data]) 
         })      
