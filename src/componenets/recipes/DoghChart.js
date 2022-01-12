@@ -12,20 +12,21 @@ const DoughChart =(props)=>{
     const recipeCalories = nutrifacts && nutrifacts[0].recipeClories;
     const recipeCarbohyd = nutrifacts && nutrifacts[0].recipeCarbohydes;
     const recipeProteines = nutrifacts && nutrifacts[0].recipeProteines;
+    const recipeFiber = nutrifacts && nutrifacts[0].recipeFiber;
     const recipeFat = nutrifacts && nutrifacts[0].recipeFat;
 
     const data = {
         // labels: ['Calories','Glucides','Proteines','Lipidees'],
-        labels: ['Glucides Gr','Proteines','Lipidees'],
+        labels: ['Glucides','Proteines','Lipidees', 'Fibres'],
         datasets: [
             {
                 label: 'Valeurs nutritionnelles',
                 // data: [recipeCalories,recipeCarbohyd,recipeProteines,recipeFat],
-                data: [recipeCarbohyd,recipeProteines,recipeFat],
+                data: [recipeCarbohyd,recipeProteines,recipeFat,recipeFiber],
                 borderColor: ['rgba(255,206,86,0.2)'],
                 backgroundColor: ['rgba(232,99,132,1)',
                 'rgba(232,211,6,1)',
-                // 'rgba(54,162,235,1)',
+                'rgba(54,162,235,1)',
                 // 'rgba(255,159,64,1)',
                 'rgba(153,102,255,1)' ],
                 pointBackgroundColor: 'rgba(255,206,86,0.2)',

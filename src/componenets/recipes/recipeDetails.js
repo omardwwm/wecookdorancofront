@@ -272,7 +272,10 @@ const RecipeDetails = (props)=>{
                 </p> 
                 {testRecipe.recipeNutriFacts && testRecipe.recipeNutriFacts.length > 0 ? (
                     <div>
-                        <h4>Informations nutritionnelles pour 100 g de recette</h4>     
+                        <h5>Informations nutritionnelles pour 100 g de recette*</h5>
+                        {testRecipe && testRecipe.nutriFactsStatus === "GIVED" ? 
+                            (<p style={{fontSize:"small", color:"#ffff00"}}>*Infos fournis par le createur de la recette</p>):null
+                        }     
                         <div className="m-4 col-md-6 col-lg-4 col-xs-10" >
                             <DoghChart nutriFacts={testRecipe && testRecipe.recipeNutriFacts}/>
                         </div>
