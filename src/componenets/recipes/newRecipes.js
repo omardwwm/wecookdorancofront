@@ -261,7 +261,7 @@ const Recipes = ()=>{
     const calculRecipeNutrifactsFor100Grams = (recipeIngrediants)=>{
         if (recipeIngrediants && recipeIngrediants.length > 0) {
             if (willGiveNutriFacts) {
-                if(!recipeCaloriesIn100Grams || !recipeCaloriesIn100Grams || !recipeProteinIn100Grams ||!recipeFatIn100Grams){
+                if(!recipeCaloriesIn100Grams || !recipeCaloriesIn100Grams || !recipeProteinIn100Grams ||!recipeFatIn100Grams || !recipeFiberIn100Grams){
                     setNutriFactsFormError('Rensigner toutes les valeurs!!');
                 }else{
                     // pour le test, a modifier selon les info fourni par le createur de la recette via le form dans la collapse
@@ -302,9 +302,9 @@ const Recipes = ()=>{
         return () => mounted = false;
     }, [recipeIngrediants]);
 
-    console.log(willGiveNutriFacts)
-    console.log(recipeNutriFacts);
-    console.log(recipeIngrediants);
+    // console.log(willGiveNutriFacts)
+    // console.log(recipeNutriFacts);
+    // console.log(recipeIngrediants);
     const handleSubmit =(event)=>{
         event.preventDefault();
         const recipeINgTest = recipeIngrediants;
@@ -367,7 +367,7 @@ const Recipes = ()=>{
     useEffect(()=>{
         localStorage.getItem('myUser');
         localStorage.getItem('userToken');
-        console.log(recipeIngrediants);
+        // console.log(recipeIngrediants);
         // if(user && token){
         //     setDisableAddButton(false)
         // }else{
@@ -376,7 +376,7 @@ const Recipes = ()=>{
         // }
     }, [recipeIngrediants])
     
-    console.log("test from", recipeNutriFacts);
+    // console.log("test from", recipeNutriFacts);
 
     return (
         <div className="formNewRecipe">
@@ -435,7 +435,7 @@ const Recipes = ()=>{
                         </FormGroup>
                         <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
                             <Label for="quantity">Quantité de l'ingrédient</Label>
-                            <Input type="number" name="quantity" value={quantity} id="quantity" placeholder="Quantité (En chiffre)" onChange={onChangeIngredientQauntity} />
+                            <Input type="number" min="0" name="quantity" value={quantity} id="quantity" placeholder="Quantité (En chiffre)" onChange={onChangeIngredientQauntity} />
                         
                         </FormGroup>
                         <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
@@ -494,23 +494,23 @@ const Recipes = ()=>{
                                             <p style={{fontSize:"small", color:"#db6111"}}>Ces valeurs seront affichees avec la recette, veuillez assurez que'elles sont calculees selon les normes pour chaques 100 grames de la recette</p>
                                             <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                                 <Label for="recipeCaloriesIn100Grams">Calories</Label>
-                                                <Input type="number" name="recipeCaloriesIn100Grams" value={recipeCaloriesIn100Grams} id="recipeCaloriesIn100Grams" onChange={(e)=> setRecipeCaloriesIn100Grams(e.target.value)} />
+                                                <Input type="number" min="0" name="recipeCaloriesIn100Grams" value={recipeCaloriesIn100Grams} id="recipeCaloriesIn100Grams" onChange={(e)=> setRecipeCaloriesIn100Grams(e.target.value)} />
                                             </FormGroup>
                                             <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                                 <Label for="recipeCarbohydIn100Grams">Glucides</Label>
-                                                <Input type="number" name="recipeCarbohydIn100Grams" value={recipeCarbohydIn100Grams} id="recipeCarbohydIn100Grams" onChange={(e)=> setRecipeCarbohydIn100Grams(e.target.value)} />
+                                                <Input type="number" min="0" name="recipeCarbohydIn100Grams" value={recipeCarbohydIn100Grams} id="recipeCarbohydIn100Grams" onChange={(e)=> setRecipeCarbohydIn100Grams(e.target.value)} />
                                             </FormGroup>
                                             <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                                 <Label for="recipeProteinIn100Grams">Proteines</Label>
-                                                <Input type="number" name="recipeProteinIn100Grams" value={recipeProteinIn100Grams} id="recipeProteinIn100Grams" onChange={(e)=> setRecipeProteinIn100Grams(e.target.value)} />
+                                                <Input type="number" min="0" name="recipeProteinIn100Grams" value={recipeProteinIn100Grams} id="recipeProteinIn100Grams" onChange={(e)=> setRecipeProteinIn100Grams(e.target.value)} />
                                             </FormGroup>
                                             <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                                 <Label for="recipeFatIn100Grams">Lipides</Label>
-                                                <Input type="number" name="recipeFatIn100Grams" value={recipeFatIn100Grams} id="recipeFatIn100Grams" onChange={(e)=> setRecipeFatIn100Grams(e.target.value)} />
+                                                <Input type="number" min="0" name="recipeFatIn100Grams" value={recipeFatIn100Grams} id="recipeFatIn100Grams" onChange={(e)=> setRecipeFatIn100Grams(e.target.value)} />
                                             </FormGroup>
                                             <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                                 <Label for="recipeFiberIn100Grams">Fibres</Label>
-                                                <Input type="number" name="recipeFiberIn100Grams" value={recipeFiberIn100Grams} id="recipeFiberIn100Grams" onChange={(e)=> setRecipeFiberIn100Grams(e.target.value)} />
+                                                <Input type="number" min="0" name="recipeFiberIn100Grams" value={recipeFiberIn100Grams} id="recipeFiberIn100Grams" onChange={(e)=> setRecipeFiberIn100Grams(e.target.value)} />
                                             </FormGroup>
 
                                         </CardBody>

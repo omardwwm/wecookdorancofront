@@ -6,6 +6,7 @@ const initialState = {
     userToken: null,
     isUserLogged: false,
     modalBody:"",
+    modalSuccessLogin:"",
     modalTitle: "",
     modalButtonDisabled: false,
     conditionsAccepted: false,
@@ -60,7 +61,7 @@ export const userReducer = (state = initialState, action) =>{
                 redirect: action.redirect,
                 // showModale:action.showModale,
                 // modalTitle:action.modalTitle,
-                modalBody:action.modalBody
+                modalSuccessLogin:action.modalBody
                 // modal: true
             }; 
 
@@ -73,7 +74,7 @@ export const userReducer = (state = initialState, action) =>{
                 redirect: action.redirect,
                 // showModale:action.showModale,
                 // modalTitle:action.modalTitle,
-                modalBody:action.modalBody 
+                modalSuccessLogin:action.modalBody 
             };
             
         case "GET-USERMETADATA-SUCCESS":
@@ -94,7 +95,7 @@ export const userReducer = (state = initialState, action) =>{
                 user: action.user,
                 userToken: action.token,
                 isUserLogged: action.isUserLogged,
-                modalBody: action.modalBody
+                modalSuccessLogin: action.modalBody
                 // redirect: action.redirect
             };
         case "CHANGE-PASSWORD-SUCCESS":

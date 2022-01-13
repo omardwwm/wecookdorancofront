@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import ReactDOM from "react-dom";
 import {FormGroup, Label, Input, Button} from "reactstrap";
 import {RiAddCircleFill, RiDeleteBin6Fill} from "react-icons/ri"
 // import { connect } from 'react-redux';

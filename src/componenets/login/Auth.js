@@ -24,15 +24,15 @@ const Auth = ()=>{
         setIsOpen(!isOpen);
         setInputs(state=>({...state, name:''}))
     }
-    const modalBody = useSelector(state=>state.userReducer.modalBody);
+    const modalBody = useSelector(state=>state.userReducer.modalSuccessLogin);
     // console.log(modalBody);
-    const [loginMessage, setLoginMessage] = useState(modalBody);
+    const [loginMessage, setLoginMessage] = useState('');
     // console.log(loginMessage);
     const isUserLogged = useSelector(state=>state.userReducer.isUserLogged);
     // console.log(isUserLogged);
     // console.log('isuserloggedafterauth', logged);
     // const token = useSelector(state=>state.userReducer.userToken)
-    const token =localStorage.getItem("userToken");
+    // const token =localStorage.getItem("userToken");
     const validEmailRegex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
     let [emailError, setEmailError] = useState('');
     const [submitError, setSubmitError] = useState('');
@@ -93,9 +93,19 @@ const Auth = ()=>{
             if(modalBody){
                 setLoginMessage(modalBody)
                 }
+                setTimeout(() => {
+                    history.push("/recipes");
+                    setLoginMessage("");
+                }, 3000);
             }   
         }
 
+        const redirect=()=>{
+            setTimeout(() => {
+                history.push("/recipes");
+                setLoginMessage("");
+            }, 3000);
+        }
     useEffect(() => {
         let mounted = true;
         if(mounted){
@@ -108,10 +118,7 @@ const Auth = ()=>{
 
         if(isUserLogged){
             console.log(modalBody);
-            setTimeout(() => {
-                history.push("/recipes");
-                // setLoginMessage("");
-            }, 3000);
+            redirect();
         }
     // console.log(isUserLogged);
 

@@ -3,8 +3,8 @@ import axios from "axios";
 export const createRecipe = (formData, config)=>{
     return async(dispatch)=>{
         try {
-            // const response = await axios.post('https://mern-recipes.herokuapp.com/recipes/add-recipe', 
-            const response = await axios.post('http://localhost:8080/recipes/add-recipe', // PENSER A REMETTRE L'URL PRODUCTION "HEROKU",  DECOMMENTER.
+            const response = await axios.post('https://mern-recipes.herokuapp.com/recipes/add-recipe', 
+            // const response = await axios.post('http://localhost:8080/recipes/add-recipe', // PENSER A REMETTRE L'URL PRODUCTION "HEROKU",  DECOMMENTER.
             formData, config);
             // console.log(response);
             dispatch({
@@ -72,6 +72,7 @@ export const updateRecipe=(recipeId, formData,config)=>{
     return async(dispatch)=>{
         try {
             const response = await axios.put(`https://mern-recipes.herokuapp.com/recipes/update/${recipeId}`,formData, config);
+            // const response = await axios.put(`http://localhost:8080/recipes/update/${recipeId}`,formData, config);
             // console.log(response);
             dispatch({
                 type: "UPDATE-RECIPE-SUCCESS",

@@ -10,7 +10,6 @@ import {useHistory, Link} from "react-router-dom";
 import {formatDate} from "../../outils/outils";
 import {GiAlarmClock, GiTrashCan} from 'react-icons/gi';
 import {AiOutlineLike} from 'react-icons/ai';
-import {Doughnut} from 'react-chartjs-2';
 import DoghChart from './DoghChart';
 import "./recipes.css";
 
@@ -90,9 +89,13 @@ const RecipeDetails = (props)=>{
     }
 
     useEffect(()=>{
-        if(modalBody){
-            setModalMessage(modalBody)
+        let mounted = true
+        if(mounted){
+            if(modalBody){
+                setModalMessage(modalBody)
+            }      
         }
+        return () => mounted = false;
     }, [modalBody]);
 
     const sendComment =(e)=>{
@@ -131,13 +134,13 @@ const RecipeDetails = (props)=>{
     // const currentRecipeComments = testRecipe && testRecipe.comments && testRecipe.comments;
     // console.log(currentRecipeComments);
     const fetchRecipe =async()=>{
-        // await axios.get(`https://mern-recipes.herokuapp.com/recipes/${recipeId}`).then(response=>{
-            await axios.get(`http://localhost:8080/recipes/${recipeId}`).then(response=>{
+        await axios.get(`https://mern-recipes.herokuapp.com/recipes/${recipeId}`).then(response=>{
+            // await axios.get(`http://localhost:8080/recipes/${recipeId}`).then(response=>{
             setTestRecipe(response.data);
         })      
     } 
     // TODO // DISPLAY RECIPENUTRIFACTS AFETR FINISH PROCESS IN BACKEND AND DATABASE 
-    testRecipe && console.log('recipeFinalIs', testRecipe);
+    // testRecipe && console.log('recipeFinalIs', testRecipe);
     const idFromRecipe = testRecipe.recipeCreator;
     // idFromRecipe == userId ? console.log('okkkk'): console.log('not working')
     // const isMine = (testRecipe.recipeCreator ===user && user.id || testRecipe.recipeCreator===user && user._id) ? true : false;    
