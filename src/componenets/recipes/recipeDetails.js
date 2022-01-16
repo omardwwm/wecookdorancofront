@@ -27,7 +27,7 @@ const RecipeDetails = (props)=>{
     // console.log(test); 
     // console.log(localStorage); 
     // console.log('recipeFromReducer', thisRecipe);
-    console.log('recipe is',testRecipe);
+    // console.log('recipe is',testRecipe);
     // const test2 = localStorage.thisRecipe && JSON.parse(localStorage.thisRecipe).recipeName;
     // console.log(test2);    
     const token = localStorage.getItem('userToken');
@@ -244,7 +244,7 @@ const RecipeDetails = (props)=>{
                             alt="recipe illustration"
                             />
                         <div className="likeDiv">
-                        {testRecipe.likes? (
+                            {testRecipe.likes? (
                                 <>
                                     {/* {testRecipe.likes.length}&nbsp;&nbsp;{testRecipe.likes.length ===1 ? 'LIKE' : 'LIKES'}  */}
                                     {testRecipe.likes.includes(userId)?(
@@ -259,7 +259,7 @@ const RecipeDetails = (props)=>{
                                             <p>{testRecipe.likes && testRecipe.likes.length}&nbsp;<AiOutlineLike onClick={likeRecipe} style={{color:'grey', fontSize:'30px'}}/></p>
                                     }                                 
                                 </>                                
-                            ):
+                                ):
                                 <>
                                     <p>0&nbsp;<AiOutlineLike onClick={likeRecipe} style={{color:'grey', fontSize:'30px'}}/></p>        
                                 </>    
