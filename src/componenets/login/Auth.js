@@ -6,6 +6,7 @@ import {login} from "../../redux";
 import {useHistory} from "react-router-dom";
 import ForgotPassword from "./ForgotPaasword";
 import { Button, Collapse, Card, CardBody } from 'reactstrap';
+// import ConvertImgToText from "./photoConverter";
 
 
 
@@ -106,6 +107,7 @@ const Auth = ()=>{
                 setLoginMessage("");
             }, 3000);
         }
+        
     useEffect(() => {
         let mounted = true;
         if(mounted){
@@ -129,6 +131,7 @@ const Auth = ()=>{
     return(
         <>
             <h3>Se connecter a votre compte</h3>
+            {/* <ConvertImgToText/> */}
             <div className=" loginDiv col-sm-12 mt-5">
                 <div className=" loginFormDiv col-md-6" >
                     <form onSubmit={userLogin} className="container d-inline-block col-lg-10">

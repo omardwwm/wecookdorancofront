@@ -103,17 +103,23 @@ const UpdateRecipe = (props)=>{
     }
     const [recipeNutriFacts, setRecipeNutriFacts] = useState(recipeToUpdate.recipeNutriFacts && recipeToUpdate.recipeNutriFacts);
     // const nutriFactsStatus = recipeToUpdate.nutriFactsStatus && recipeToUpdate.nutriFactsStatus; // A revoir si besoin lors de l'update
-    const[recipeCaloriesIn100Grams, setRecipeCaloriesIn100Grams] = useState(recipeToUpdate.recipeNutriFacts[0].recipeClories);
-    const[recipeCarbohydIn100Grams, setRecipeCarbohydIn100Grams] = useState(recipeToUpdate.recipeNutriFacts[0].recipeCarbohydes);
-    const[recipeProteinIn100Grams, setRecipeProteinIn100Grams] = useState(recipeToUpdate.recipeNutriFacts[0].recipeProteines);
-    const[recipeFatIn100Grams, setRecipeFatIn100Grams] = useState(recipeToUpdate.recipeNutriFacts[0].recipeFat);
-    const[recipeFiberIn100Grams, setRecipeFiberIn100Grams] = useState(recipeToUpdate.recipeNutriFacts[0].recipeFiber);
+    const isNutrifacts =()=>{
+        return recipeToUpdate.nutriFactsStatus && recipeToUpdate.nutriFactsStatus !=='NC';
+    };
+    console.log(recipeToUpdate.recipeNutriFacts);
+    console.log(recipeToUpdate.nutriFactsStatus);
+    console.log(isNutrifacts());
+    const[recipeCaloriesIn100Grams, setRecipeCaloriesIn100Grams] = useState(isNutrifacts()?recipeToUpdate.recipeNutriFacts[0].recipeClories:'');
+    const[recipeCarbohydIn100Grams, setRecipeCarbohydIn100Grams] = useState(isNutrifacts()?recipeToUpdate.recipeNutriFacts[0].recipeCarbohydes:'');
+    const[recipeProteinIn100Grams, setRecipeProteinIn100Grams] = useState(isNutrifacts()?recipeToUpdate.recipeNutriFacts[0].recipeProteines:'');
+    const[recipeFatIn100Grams, setRecipeFatIn100Grams] = useState(isNutrifacts()?recipeToUpdate.recipeNutriFacts[0].recipeFat:'');
+    const[recipeFiberIn100Grams, setRecipeFiberIn100Grams] = useState(isNutrifacts()?recipeToUpdate.recipeNutriFacts[0].recipeFiber:'');
     // recipeFiberIn100Grams
     const[nutriFactsFormError, setNutriFactsFormError] = useState('');
 
     const calculRecipeNutrifactsFor100Grams = (recipeIngrediants)=>{
         if (recipeIngrediants && recipeIngrediants.length > 0) {
-            if(!recipeCaloriesIn100Grams || recipeCarbohydIn100Grams==='' || recipeProteinIn100Grams==='' ||recipeFatIn100Grams==='' || recipeFiberIn100Grams===''){
+            if(recipeCaloriesIn100Grams==='' || recipeCarbohydIn100Grams==='' || recipeProteinIn100Grams==='' ||recipeFatIn100Grams==='' || recipeFiberIn100Grams===''){
                 setNutriFactsFormError('Rensigner toutes les valeurs!!');
             }else{
                 // pour le test, a modifier selon les info fourni par le createur de la recette via le form dans la collapse
