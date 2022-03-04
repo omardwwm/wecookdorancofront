@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Tesseract from 'tesseract.js';
+import axios from "axios";
 // import { createWorker } from 'tesseract.js';
 
 const ConvertImgToText = () =>{
@@ -9,6 +10,8 @@ const ConvertImgToText = () =>{
     const [text, setText] = useState('');
     const [progress, setProgress] = useState(0);
     const[errorMsg, setErrorMsg] = useState('')
+    // Pour tester l'api node tesseract
+    const [picture, setPicture] = useState("");
 
     const convertImg = () => {
         if(!image){
@@ -40,6 +43,37 @@ const ConvertImgToText = () =>{
         }
       };
 
+
+      useEffect(() => {
+        let mounted = true;
+        if(mounted){
+          console.log(picture)
+        }
+        return () => mounted = false
+      }, [picture])
+
+      const selectPict = (e)=>{
+        e.preventDefault();
+        setPicture(e.target.files[0]);
+        console.log(picture);
+      }
+      const testApiTessNode = async(e)=>{
+
+        e.preventDefault();
+        const config = {headers: {
+          Accept:'*/*',
+          'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
+      }};
+      console.log(picture);
+        const formData = new FormData();
+        formData.append("picture",picture);
+        await axios.post('http://localhost:8080/convert', formData, config);
+        // .then(response=>{
+        //     console.log(response && response.data);
+        // })      
+      }
+
+
       const cleanComponentConvert = event =>{
          event.preventDefault();
          setIsLoading(false);
@@ -64,19 +98,25 @@ const ConvertImgToText = () =>{
               )}
               {!isLoading && !text && (
                 <>
+                <form enctype="multipart/form-data">
                   <input
                     type="file"
-                    onChange={(e) =>
-                      setImage(URL.createObjectURL(e.target.files[0]))
-                    }
+                    name="picture"
+                    onChange={selectPict}
+                    // onChange={(e) =>
+                    //   // setImage(URL.createObjectURL(e.target.files[0]))
+                    //   setPicture(e.target.files[0])
+                    // }
                     className="form-control mt-1 mb-1"
                   />
                   <input
                     type="button"
-                    onClick={convertImg}
+                    // onClick={convertImg}
+                    onClick={testApiTessNode}
                     className="btn btn-primary mt-1"
                     value="Convert"
                   />
+                </form>
                 </>
               )}
               <p style={{color:'#ff0000'}}>{errorMsg}</p>
@@ -99,4 +139,4 @@ const ConvertImgToText = () =>{
 
 }
 
-export default ConvertImgToText;
+// export default ConvertImgToText;
