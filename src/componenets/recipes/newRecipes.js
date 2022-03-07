@@ -90,6 +90,17 @@ const Recipes = () => {
             errors, [name]: value
         })
     }
+    // const rx_live = /^[+-]?\d*(?:[.,]\d*)?$/;
+    // const [nutriFactsvalues, setNutriFactsValues] = useState({});
+    // const handleChangeRecipeNutri = (event) => {
+    //     const { name, value } = event.target;
+    //     setNutriFactsValues({ ...nutriFactsvalues, [name]: Math.round(value * 100) / 100 })
+    //     // if (rx_live.test(event.target.value)) {
+    //     //     setNutriFactsValues(nutriFactsvalues => {
+    //     //         return { ...nutriFactsvalues, [name]: value };
+    //     //     })
+    //     // }
+    // }
     // console.log(formRecipe);
     const onChangeIngredientName = (e) => {
         setIngredientName(e.target.value)
@@ -497,10 +508,12 @@ const Recipes = () => {
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeCaloriesIn100Grams">Calories</Label>
                                     <Input type="number" min="0" name="recipeCaloriesIn100Grams" value={recipeCaloriesIn100Grams} step="0.01" id="recipeCaloriesIn100Grams" onChange={(e) => setRecipeCaloriesIn100Grams(e.target.value)} />
+                                    {/* <Input type="number" min="0" name="recipeCaloriesIn100Grams" value={recipeCaloriesIn100Grams} pattern="[+-]?\d+(?:[.,]\d+)?" id="recipeCaloriesIn100Grams" onChange={(e) => setRecipeCaloriesIn100Grams(Math.round(e.target.value * 100) / 100)} /> */}
                                 </FormGroup>
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeCarbohydIn100Grams">Glucides</Label>
-                                    <Input type="number" min="0" name="recipeCarbohydIn100Grams" value={recipeCarbohydIn100Grams} step="0.01" id="recipeCarbohydIn100Grams" onChange={(e) => setRecipeCarbohydIn100Grams(e.target.value)} />
+                                    <Input type="number" min="0" name="recipeCarbohydIn100Grams" value={recipeCarbohydIn100Grams} step="0.01" id="recipeCarbohydIn100Grams" onChange={(e) => setRecipeCarbohydIn100Grams(e.target.value )} />
+                                    {/* <Input type="number" min="0" name="recipeCarbohydIn100Grams" value={recipeCarbohydIn100Grams} pattern="[0-9]+([\.,][0-9]+)?" step="0.01" id="recipeCarbohydIn100Grams" onChange={(e) => setRecipeCarbohydIn100Grams(Math.round((e.target.value + Number.EPSILON) * 100) / 100)} /> */}
                                 </FormGroup>
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeProteinIn100Grams">Proteines</Label>
@@ -509,7 +522,7 @@ const Recipes = () => {
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeFatIn100Grams">Lipides</Label>
                                     <Input type="number" min="0" name="recipeFatIn100Grams" value={recipeFatIn100Grams} step="0.01" id="recipeFatIn100Grams" onChange={(e) => setRecipeFatIn100Grams(e.target.value)} />
-                                </FormGroup> 
+                                </FormGroup>
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeFiberIn100Grams">Fibres</Label>
                                     <Input type="number" min="0" name="recipeFiberIn100Grams" value={recipeFiberIn100Grams} step="0.01" id="recipeFiberIn100Grams" onChange={(e) => setRecipeFiberIn100Grams(e.target.value)} />
