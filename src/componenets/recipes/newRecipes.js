@@ -437,7 +437,7 @@ const Recipes = () => {
                         </FormGroup>
                         <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
                             <Label for="quantity">Quantité de l'ingrédient</Label>
-                            <Input type="number" min="0" name="quantity" value={quantity} id="quantity" placeholder="Quantité (En chiffre)" onChange={onChangeIngredientQauntity} />
+                            <Input type="number" min="0" name="quantity" value={quantity} step="any" id="quantity" placeholder="Quantité (En chiffre)" onChange={onChangeIngredientQauntity} />
 
                         </FormGroup>
                         <FormGroup className="col-md-3 col-sm-4 col-xs-7 d-inline-block">
@@ -496,23 +496,23 @@ const Recipes = () => {
                                 <p style={{ fontSize: "small", color: "#db6111" }}>Ces valeurs seront affichees avec la recette, veuillez assurez que'elles sont calculees selon les normes pour chaques 100 grames de la recette</p>
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeCaloriesIn100Grams">Calories</Label>
-                                    <Input type="number" min="0" name="recipeCaloriesIn100Grams" value={recipeCaloriesIn100Grams} id="recipeCaloriesIn100Grams" onChange={(e) => setRecipeCaloriesIn100Grams(e.target.value)} />
+                                    <Input type="number" min="0" name="recipeCaloriesIn100Grams" value={recipeCaloriesIn100Grams} step="0.01" id="recipeCaloriesIn100Grams" onChange={(e) => setRecipeCaloriesIn100Grams(e.target.value)} />
                                 </FormGroup>
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeCarbohydIn100Grams">Glucides</Label>
-                                    <Input type="number" min="0" name="recipeCarbohydIn100Grams" value={recipeCarbohydIn100Grams} id="recipeCarbohydIn100Grams" onChange={(e) => setRecipeCarbohydIn100Grams(e.target.value)} />
+                                    <Input type="number" min="0" name="recipeCarbohydIn100Grams" value={recipeCarbohydIn100Grams} step="0.01" id="recipeCarbohydIn100Grams" onChange={(e) => setRecipeCarbohydIn100Grams(e.target.value)} />
                                 </FormGroup>
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeProteinIn100Grams">Proteines</Label>
-                                    <Input type="number" min="0" name="recipeProteinIn100Grams" value={recipeProteinIn100Grams} id="recipeProteinIn100Grams" onChange={(e) => setRecipeProteinIn100Grams(e.target.value)} />
+                                    <Input type="number" min="0" name="recipeProteinIn100Grams" value={recipeProteinIn100Grams} step="0.01" id="recipeProteinIn100Grams" onChange={(e) => setRecipeProteinIn100Grams(e.target.value)} />
                                 </FormGroup>
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeFatIn100Grams">Lipides</Label>
-                                    <Input type="number" min="0" name="recipeFatIn100Grams" value={recipeFatIn100Grams} id="recipeFatIn100Grams" onChange={(e) => setRecipeFatIn100Grams(e.target.value)} />
-                                </FormGroup>
+                                    <Input type="number" min="0" name="recipeFatIn100Grams" value={recipeFatIn100Grams} step="0.01" id="recipeFatIn100Grams" onChange={(e) => setRecipeFatIn100Grams(e.target.value)} />
+                                </FormGroup> 
                                 <FormGroup className="col-md-2 col-sm-3 col-xs-6 d-inline-block">
                                     <Label for="recipeFiberIn100Grams">Fibres</Label>
-                                    <Input type="number" min="0" name="recipeFiberIn100Grams" value={recipeFiberIn100Grams} id="recipeFiberIn100Grams" onChange={(e) => setRecipeFiberIn100Grams(e.target.value)} />
+                                    <Input type="number" min="0" name="recipeFiberIn100Grams" value={recipeFiberIn100Grams} step="0.01" id="recipeFiberIn100Grams" onChange={(e) => setRecipeFiberIn100Grams(e.target.value)} />
                                 </FormGroup>
 
                             </CardBody>
