@@ -83,8 +83,8 @@ const ResetPassword =(props)=>{
                     Accept:'*/*',
                     'content-type':'application/json' 
                     };
-                // const response = await axios.put(`https://mern-recipes.herokuapp.com/reset/change-password/${id}/${token}`, data, {headers} );
-                const response = await axios.put(`http://localhost:8080/reset/change-password/${id}/${token}`, data, {headers} );
+                const response = await axios.put(`https://mern-recipes.herokuapp.com/reset/change-password/${id}/${token}`, data, {headers} );
+                // const response = await axios.put(`http://localhost:8080/reset/change-password/${id}/${token}`, data, {headers} );
                 // console.log(response.data);
                 setResResetMessage(response.data.message);
                 // setTimeout(() => {
