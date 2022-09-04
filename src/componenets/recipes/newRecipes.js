@@ -425,8 +425,6 @@ const Recipes = () => {
                         <Input
                             type="checkbox" label="checkbox" name="checkbox" id="willCalculateNutriFacts"
                             checked={willCalculateNutriFacts}
-                            // checked onclick="return false;" onkeydown="e = e || window.event; if(e.keyCode !== 9) return false;"
-                            // onChange={onCheckCheckBoxCalculate}
                             onChange={(e) => e.preventDefault()}
                         />
                         <p style={{ fontSize: "10px", color: "yellow" }}>

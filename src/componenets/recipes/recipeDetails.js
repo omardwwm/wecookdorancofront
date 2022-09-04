@@ -10,6 +10,7 @@ import {useHistory, Link} from "react-router-dom";
 import {formatDate} from "../../outils/outils";
 import {GiAlarmClock, GiTrashCan} from 'react-icons/gi';
 import {AiOutlineLike} from 'react-icons/ai';
+import { generateRecipePDF } from "./generateRecipePDF";
 import DoghChart from './DoghChart';
 import "./recipes.css";
 
@@ -199,6 +200,10 @@ const RecipeDetails = (props)=>{
             }
     }
 
+    const generatePDFFunction = ()=>{
+        generateRecipePDF(testRecipe, htmlInstructions)
+    }
+
     useEffect(()=>{
         fetchRecipe();
         localStorage.getItem('userToken');
@@ -298,6 +303,10 @@ const RecipeDetails = (props)=>{
                     {/* <div dangerouslySetInnerHTML={{__html: currentRecipe.recipeDescription}} />  */}
                     <div dangerouslySetInnerHTML={{__html: htmlInstructions}} />      
                 </div>   
+            </div>
+            <div>
+                <button onClick={()=>generatePDFFunction()}>TELECHARGER PDF RECETTE</button>
+                {/* {generateRecipePDF()} */}
             </div>
             <div className="commentsDiv col-12" >
                 <Form onSubmit={sendComment} >
