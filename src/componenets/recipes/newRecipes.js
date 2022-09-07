@@ -294,7 +294,7 @@ const Recipes = () => {
             let sumCalories = recipeIngrediants.reduce(function (prev, current) {
                 return prev + +current.ingredientCaloriesForCentGrams
             }, 0);
-            console.log(sumCalories);
+            // console.log(sumCalories);
             const nutriFactsTemp = {
                 recipeCaloriesIn100Grams: sumCalories,
                 recipeCarbohydIn100Grams: 55,
@@ -319,9 +319,9 @@ const Recipes = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const recipeINgTest = recipeIngrediants;
-        console.log(recipeINgTest);
+        // console.log(recipeINgTest);
         // calculRecipeNutrifactsFor100Grams(recipeINgTest);
-        console.log(recipeNutriFacts);
+        // console.log(recipeNutriFacts);
         const recipeToSend = JSON.stringify(recipeINgTest);
         // console.log(recipeToSend);
         // Add nutrifacts array

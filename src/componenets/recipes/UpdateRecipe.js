@@ -106,9 +106,9 @@ const UpdateRecipe = (props) => {
     const isNutrifacts = () => {
         return recipeToUpdate.nutriFactsStatus && recipeToUpdate.nutriFactsStatus !== 'NC';
     };
-    console.log(recipeToUpdate.recipeNutriFacts);
-    console.log(recipeToUpdate.nutriFactsStatus);
-    console.log(isNutrifacts());
+    // console.log(recipeToUpdate.recipeNutriFacts);
+    // console.log(recipeToUpdate.nutriFactsStatus);
+    // console.log(isNutrifacts());
     const [recipeCaloriesIn100Grams, setRecipeCaloriesIn100Grams] = useState(isNutrifacts() ? recipeToUpdate.recipeNutriFacts[0].recipeClories : '');
     const [recipeCarbohydIn100Grams, setRecipeCarbohydIn100Grams] = useState(isNutrifacts() ? recipeToUpdate.recipeNutriFacts[0].recipeCarbohydes : '');
     const [recipeProteinIn100Grams, setRecipeProteinIn100Grams] = useState(isNutrifacts() ? recipeToUpdate.recipeNutriFacts[0].recipeProteines : '');
@@ -138,7 +138,7 @@ const UpdateRecipe = (props) => {
             // }
         }
     }
-    console.log(recipeNutriFacts);
+    // console.log(recipeNutriFacts);
 
     const htmlInstructions = stateToHTML(convertFromRaw(JSON.parse(recipeToUpdate.recipeDescription)));
     const [instructionsError, setInstructionsError] = useState('');
@@ -262,7 +262,7 @@ const UpdateRecipe = (props) => {
         formData.append('recipeIngrediants', recipeToSend);
         formData.append('recipeNutriFacts', nutriFactsToSend);
         if (checkFormValidation()) {
-            console.log(nutriFactsToSend);
+            // console.log(nutriFactsToSend);
             dispatch(updateRecipe(recipeId, formData, config)).then(setModal(true)).then(() => setTimeout(() => {
                 history.push(`/recipes`);
                 (setModal(false))

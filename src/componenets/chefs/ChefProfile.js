@@ -75,7 +75,7 @@ const ChefProfile =(props)=>{
                         <div >
                             {userData.recipes && userData.recipes.map((recipe, index)=>{
                                 return (
-                                    <Card key={index} className="profileRecipeCard d-inline-block col-md-5" >
+                                    <Card key={index} className="profileRecipeCard d-inline-block col-md-4 col-xl-3 col-xs-12" >
                                             <CardTitle id="profileTitleCardRealisation">{recipe.recipeName}</CardTitle>
                                             <Link to={{pathname: `/recipesDetails/${recipe._id}`, state:{recipe}}} className="profileLinkRecipe">
                                                 <img src={recipe.recipePicture} className="profileRecipeImg" alt="illustration-recipe" />

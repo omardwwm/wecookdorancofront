@@ -214,7 +214,7 @@ const sendUserData =async(e)=>{
             "x-auth-token":`${token}`
             }
         });
-        console.log(response);
+        // console.log(response);
         dispatch(getUserMetaData(userId))
         // userMetaData();
         // console.log(formUserData);
@@ -240,7 +240,7 @@ const updateUserMetaData=async(e)=>{
             "x-auth-token":`${token}`
             }
         });
-        console.log(response);
+        // console.log(response);
         dispatch(getUserMetaData(userId))
         // userMetaData();
         setTimeout(() => {

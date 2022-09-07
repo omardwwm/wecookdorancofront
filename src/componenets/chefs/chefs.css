@@ -19,10 +19,10 @@
     margin-left: 5px;
 }
 .chefPic{
-    width: 65%;
-    height: 120px;
-    border-radius: 50%;
-    margin-left: 8px;
+    width: 200px;
+    height: 200px;
+    border-radius: 5%;
+    /* margin-left: 8px; */
 }
 
 #titreRealisation{

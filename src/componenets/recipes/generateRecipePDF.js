@@ -4,9 +4,9 @@ import { renderToString } from "react-dom/server";
 import ReactDOMServer from "react-dom/server";
 
 export const generateRecipePDF = (recipeData, htmlInstructions) => {
-    console.log(recipeData);
+    // console.log(recipeData);
     let { recipeIngrediants } = recipeData;
-    console.log(recipeIngrediants);
+    // console.log(recipeIngrediants);
     const listIngrediants = () => {
         recipeIngrediants.map((ing, index) => {
             return (
@@ -18,13 +18,14 @@ export const generateRecipePDF = (recipeData, htmlInstructions) => {
     const Prints = () => (
         <div>
             <h3>{recipeData.recipeName}</h3>
-            <h4>General Information</h4>
+            <h4>Liste des ingredients</h4>
             {recipeIngrediants && recipeIngrediants.map((ing, index) => (
                 <ul className="ingr" key={index}>{ing.ingredientName}: {ing.quantity} {ing.ingredientUnity && ing.ingredientUnity} </ul>
             ))}
             {/* <div className='ingrDiv'>
                 {listIngrediants}
             </div> */}
+            <h4>Les instructions</h4>
             <div dangerouslySetInnerHTML={{ __html: htmlInstructions }} />
         </div>
     );
@@ -52,7 +53,7 @@ export const generateRecipePDF = (recipeData, htmlInstructions) => {
                 // console.log(remainingVSpace);
 
                 // let pageCount = doc.internal.getNumberOfPages();
-                console.log(pageCount);
+                // console.log(pageCount);
                 const makePag = (pageCount) => {
                     for (let i = 1; i <= pageCount; i++) {
                         doc.setPage(i);

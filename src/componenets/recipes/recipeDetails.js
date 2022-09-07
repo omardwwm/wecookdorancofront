@@ -163,7 +163,7 @@ const RecipeDetails = (props)=>{
     }
 
     const unlikeRecipe=async()=>{
-        console.log('function unlike');
+        // console.log('function unlike');
         if(!token){
             setErrorLikeMsg('Vous devez vous connecter pour liker/disliker une recette !');
             setTimeout(() => {
@@ -182,7 +182,7 @@ const RecipeDetails = (props)=>{
     }
 
     const likeRecipe=async()=>{
-        console.log('function like');
+        // console.log('function like');
         if(!token){
             setErrorLikeMsg('Vous devez vous connecter pour liker/disliker une recette !');
             setTimeout(() => {
@@ -305,7 +305,7 @@ const RecipeDetails = (props)=>{
                 </div>   
             </div>
             <div>
-                <button onClick={()=>generatePDFFunction()}>TELECHARGER PDF RECETTE</button>
+                <button onClick={()=>generatePDFFunction()}>TELECHARGER EN PDF</button>
                 {/* {generateRecipePDF()} */}
             </div>
             <div className="commentsDiv col-12" >
