@@ -11,6 +11,7 @@ import "./profile.css";
 
 
 const Profile = ()=>{
+    const {REACT_APP_WECOOK_API_RENDER} = process.env;
     const dispatch = useDispatch();
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('myUser'));
@@ -208,7 +209,7 @@ const sendUserData =async(e)=>{
                 userKitchenStyles : kitchenTypes,
                 userEstablissement: formUserData.userEstablissement  
         }
-        const response = await axios.post(`https://mern-recipes.herokuapp.com/users/metadata/add/${userId}`, data, { headers: {
+        const response = await axios.post(`${REACT_APP_WECOOK_API_RENDER}/users/metadata/add/${userId}`, data, { headers: {
             Accept:'*/*',
             'Content-Type': 'application/json',
             "x-auth-token":`${token}`
@@ -234,7 +235,7 @@ const updateUserMetaData=async(e)=>{
                 userKitchenStyles : newKitchenTypes,
                 userEstablissement: newFormUserData.newUserEstablissement  
         }
-        const response = await axios.put(`https://mern-recipes.herokuapp.com/users/metadata/update/${userId}`, data, { headers: {
+        const response = await axios.put(`${REACT_APP_WECOOK_API_RENDER}/users/metadata/update/${userId}`, data, { headers: {
             Accept:'*/*',
             'Content-Type': 'application/json',
             "x-auth-token":`${token}`
@@ -298,7 +299,7 @@ const updateUserMetaData=async(e)=>{
             formData.append('profilePicture',newProfilePicture);
             formData.append('oldProfilePicture',user.profilePicture);
 
-             await axios.put(`https://mern-recipes.herokuapp.com/users/updatePicture/${userId}`, formData, config)
+             await axios.put(`${REACT_APP_WECOOK_API_RENDER}/users/updatePicture/${userId}`, formData, config)
             .then(res=>{
                 // console.log(res);
                 setMsgUpdateImgSuccess(res.data.message);

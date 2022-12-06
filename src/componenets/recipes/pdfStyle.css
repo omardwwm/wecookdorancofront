@@ -1,0 +1,16 @@
+.pdfContent{
+    padding: 15px;
+    /* margin: 8px; */
+    width: 595.28px;
+    height: 841.89px;
+    border: 1px solid black;
+    position: relative;
+}
+
+.pdfContent h3{
+    color: blue;
+}
+
+.testTitle{
+    color: blueviolet;
+}

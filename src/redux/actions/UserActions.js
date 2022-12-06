@@ -4,12 +4,14 @@ import modalImgFailed from "../../images/400-bad-request-.jpg";
 import modalImgSuccess from "../../images/signup-reg.jpg";
 import Conditions from "../../componenets/conditions/Conditions";
 
+const {REACT_APP_WECOOK_API_RENDER} = process.env;
+
 export const registerUser = (formData, Headers)=>{
     return async(dispatch)=>{
         try {
             // const formData = new FormData();
             // console.log(formData);
-            const response =  await axios.post('https://mern-recipes.herokuapp.com/users/register', formData, Headers);
+            const response =  await axios.post(`${REACT_APP_WECOOK_API_RENDER}/users/register`, formData, Headers);
             // console.log(response);
             dispatch({
                 type: "REGISTER-SUCCES",
@@ -54,7 +56,7 @@ export const login =(email, password)=>{
     return async(dispatch) =>{
         try {
             const response = await axios
-            .post(`https://mern-recipes.herokuapp.com/users/login`, {
+            .post(`${REACT_APP_WECOOK_API_RENDER}/users/login`, {
             email: email,
             password: password
         });
@@ -88,7 +90,7 @@ export const login =(email, password)=>{
 export const getUserMetaData =(userId)=>{
     return async(dispatch)=>{
         try {
-            const response = await axios.get(`https://mern-recipes.herokuapp.com/users/metadata/${userId}`);
+            const response = await axios.get(`${REACT_APP_WECOOK_API_RENDER}/users/metadata/${userId}`);
             dispatch({
                 type: "GET-USERMETADATA-SUCCESS",
                 userMetaData: response.data
@@ -113,7 +115,7 @@ export const changePassword=(userId, token, newPassword, newPasswordConfirm)=>{
                     newPassword: newPassword,
                     newPasswordConfirm: newPasswordConfirm
                 }
-            const response = await axios.put(`https://mern-recipes.herokuapp.com/users/changePassword/${userId}`, data,
+            const response = await axios.put(`${REACT_APP_WECOOK_API_RENDER}/users/changePassword/${userId}`, data,
             {headers}
             );
             dispatch({
@@ -150,7 +152,7 @@ export const logOut =()=>{
 export const getProfessionnals = (config)=>{
     return async(dispatch)=>{
         try {
-            const response = await axios.get(`https://mern-recipes.herokuapp.com/users/professionnals`, config);
+            const response = await axios.get(`${REACT_APP_WECOOK_API_RENDER}/users/professionnals`, config);
             // console.log(response)
             dispatch({
                 type: "GET-PRO-SUCCESS",
@@ -169,7 +171,7 @@ export const deletUser =(userId, myCurrentProfilePicture, token)=>{
             const data ={
                 myCurrentProfilePicture: myCurrentProfilePicture
             }
-            const response = await axios.delete(`https://mern-recipes.herokuapp.com/users/delete/${userId}`, {
+            const response = await axios.delete(`${REACT_APP_WECOOK_API_RENDER}/users/delete/${userId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "x-auth-token": token

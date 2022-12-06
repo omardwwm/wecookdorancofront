@@ -13,8 +13,11 @@ import {AiOutlineLike} from 'react-icons/ai';
 import { generateRecipePDF } from "./generateRecipePDF";
 import DoghChart from './DoghChart';
 import "./recipes.css";
+import "./pdfStyle.css";
 
-const RecipeDetails = (props)=>{    
+const RecipeDetails = (props)=>{ 
+    
+    const {REACT_APP_WECOOK_API_RENDER} = process.env;
     const recipeId = props.match.params._id;
     // const [currentPath, setCurrentPath] = useState(window.location.pathname);
     const dispatch = useDispatch();
@@ -135,7 +138,7 @@ const RecipeDetails = (props)=>{
     // const currentRecipeComments = testRecipe && testRecipe.comments && testRecipe.comments;
     // console.log(currentRecipeComments);
     const fetchRecipe =async()=>{
-        await axios.get(`https://mern-recipes.herokuapp.com/recipes/${recipeId}`).then(response=>{
+        await axios.get(`${REACT_APP_WECOOK_API_RENDER}/recipes/${recipeId}`).then(response=>{
             // await axios.get(`http://localhost:8080/recipes/${recipeId}`).then(response=>{
             setTestRecipe(response.data);
         })      
@@ -152,7 +155,7 @@ const RecipeDetails = (props)=>{
         // console.log(e.currentTarget.id);
         let commentId = e.currentTarget.id;
         if(window.confirm('vous voulez supprimer ce commentaire?')){
-            await axios.delete(`https://mern-recipes.herokuapp.com/comments/delete/${commentId}`, {headers:{"x-auth-token":`${token}`}})
+            await axios.delete(`${REACT_APP_WECOOK_API_RENDER}/comments/delete/${commentId}`, {headers:{"x-auth-token":`${token}`}})
             .then(response => setModalMessage(response.data.message))
             .then(setModal(true))
             .then(()=>setTimeout(() => {
@@ -170,7 +173,7 @@ const RecipeDetails = (props)=>{
                 setErrorLikeMsg('');
             }, 6000);
         }else{
-            await axios.put(`https://mern-recipes.herokuapp.com/recipes/unlike/${recipeId}`,{userId:userId}, {headers:{"x-auth-token":`${token}`}})
+            await axios.put(`${REACT_APP_WECOOK_API_RENDER}/recipes/unlike/${recipeId}`,{userId:userId}, {headers:{"x-auth-token":`${token}`}})
             // .then(response => console.log(response.data.message))
             .then(response => setModalMessage(response.data.message))
                 .then(setModal(true))
@@ -189,7 +192,7 @@ const RecipeDetails = (props)=>{
                 setErrorLikeMsg('');
             }, 6000);
         }else{
-            await axios.put(`https://mern-recipes.herokuapp.com/recipes/like/${recipeId}`,{userId:userId}, {headers:{"x-auth-token":`${token}`}})
+            await axios.put(`${REACT_APP_WECOOK_API_RENDER}/recipes/like/${recipeId}`,{userId:userId}, {headers:{"x-auth-token":`${token}`}})
             // .then(response => console.log(response))
             .then(response => setModalMessage(response.data.message))
                 .then(setModal(true))

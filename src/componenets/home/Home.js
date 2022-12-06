@@ -9,6 +9,7 @@ import "./home.css";
 
 const Home = () => {
 
+    const {REACT_APP_WECOOK_API_RENDER} = process.env;
     const [lastRecipes, setLastRecipes] = useState([]);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -61,7 +62,7 @@ const Home = () => {
         let mounted = true;
         setLoading(true);
         const fetchLastRecipes = async () => {
-            await axios.get('https://mern-recipes.herokuapp.com/recipes/lastRecipes').then(response => {
+            await axios.get(`${REACT_APP_WECOOK_API_RENDER}/recipes/lastRecipes`).then(response => {
                 // console.log(response.data);
                 if (mounted) {
                     setLastRecipes([...lastRecipes, ...response.data]);

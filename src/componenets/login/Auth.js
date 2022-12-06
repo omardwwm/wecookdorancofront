@@ -12,6 +12,7 @@ import { Button, Collapse, Card, CardBody } from 'reactstrap';
 
 const Auth = ()=>{
 
+    const {REACT_APP_WECOOK_API_RENDER} = process.env;
     const dispatch = useDispatch();
     // const [email, setEmail] = useState(null);
     // const [emailToReset, setEmailToReset] = useState(null);
@@ -72,7 +73,7 @@ const Auth = ()=>{
         e.preventDefault();
         if(inputs.name){
            try {
-            const response = await axios.post(`https://mern-recipes.herokuapp.com/reset/send-url/${inputs.name}`);
+            const response = await axios.post(`${REACT_APP_WECOOK_API_RENDER}/reset/send-url/${inputs.name}`);
             // console.log(response.data);
             setMsgUrlReset(response.data.message)
         } catch (error) {

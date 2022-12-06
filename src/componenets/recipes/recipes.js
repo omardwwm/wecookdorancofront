@@ -11,6 +11,8 @@ import { AiOutlineLike } from 'react-icons/ai';
 import "./recipes.css";
 
 const Recipes = (props) => {
+
+    const {REACT_APP_WECOOK_API_RENDER} = process.env;
     // const dispatch = useDispatch();
     const [recipes, setRecipes] = useState([]);
     // const [recipes, setRecipes] = useState(useSelector(state=>state.recipeReducer.recipes));
@@ -92,7 +94,7 @@ const Recipes = (props) => {
     // http://localhost:8080/recipes    // 
     const fetchRecipes = async () => {
         setLoading(true);
-        await axios.get('https://mern-recipes.herokuapp.com/recipes').then(response => {
+        await axios.get(`${REACT_APP_WECOOK_API_RENDER}/recipes`).then(response => {
             // await axios.get('http://localhost:8080/recipes').then(response=>{
             setRecipes([...recipes, ...response.data]);
             setFiltredCategories([...filtredCategories, ...response.data]);
